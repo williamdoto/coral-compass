@@ -1,0 +1,9 @@
+{
+  "name": "coral-reef-monitor",
+  "version": "0.0.0",
+  "description": "Coral Reef Monitor",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
