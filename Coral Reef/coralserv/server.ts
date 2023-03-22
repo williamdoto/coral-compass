@@ -20,6 +20,8 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 4000;
 
+
+
 app.post("/login", loginValidate, async (req: express.Request, res: express.Response) => {
     console.log("Got login request");
     const errors = validationResult(req);

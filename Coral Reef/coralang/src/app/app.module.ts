@@ -7,6 +7,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MapPageComponent } from './map-page/map-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HomePageComponent,
     LoginPageComponent,
     MapPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
