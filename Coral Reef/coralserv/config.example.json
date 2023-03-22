@@ -4,6 +4,7 @@
         "dbName": "test",
         "collections": {
             "login": "login"
-        }
+        },
+        "bcryptSaltRounds": 10
     }
 }
