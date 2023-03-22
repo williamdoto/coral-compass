@@ -17,4 +17,4 @@ app.listen(PORT_NUMBER, () => {
 //     response.write('Hello from FIT2095!! the time is : ' + currentTime);
 //     response.end();
 // }).listen(8080);
-console.log('Server running at http://localhost:8080/');
+console.log('Server running at http://localhost:8081/');
