@@ -5,6 +5,9 @@ import bodyParser from "body-parser";
 import * as bcrypt from "bcrypt";
 import config from "./config.json";
 
+const path = require("path");
+
+
 // https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/
 var loginValidate = [
     check('username', 'Username Must Be an Email Address').isEmail().normalizeEmail()
@@ -15,6 +18,7 @@ var loginValidate = [
 ];
 
 const app = express();
+app.use("/", express.static(path.join(__dirname, "../coralang/dist/coral-ang")));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
