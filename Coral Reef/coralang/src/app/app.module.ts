@@ -9,6 +9,7 @@ import { MapPageComponent } from './map-page/map-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule
+    CommonModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

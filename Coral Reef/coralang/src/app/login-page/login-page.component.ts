@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
+  username: string = "";
+  password: string = "";
 
+  login(): void {
+    // Perform login logic here
+  }
 }
