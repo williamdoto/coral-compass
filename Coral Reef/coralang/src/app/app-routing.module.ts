@@ -10,7 +10,7 @@ import { MapPageComponent } from './map-page/map-page.component';
 const routes: Routes = [{path: "login", component: LoginPageComponent},
 {path: "map", component: MapPageComponent},
 {path: "about", component: AboutComponent},
-{path: "", component: DashboardComponent}
+{path: "", component: DashboardComponent},
 ];
 
 @NgModule({

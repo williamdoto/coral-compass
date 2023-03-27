@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import * as mapboxgl from 'mapbox-gl';
 
 
 @NgModule({
