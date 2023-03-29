@@ -18,7 +18,7 @@ var loginValidate = [
 ];
 
 const app = express();
-app.use("/", express.static(path.join(__dirname, "../dist/public")));
+// app.use("/", express.static(path.join(__dirname, "../dist/public")));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -28,7 +28,7 @@ const PORT = process.env['PORT'] || 4000;
 
 
 
-app.post("/login", loginValidate, async (req: express.Request, res: express.Response) => {
+app.post("/api/login", loginValidate, async (req: express.Request, res: express.Response) => {
     // TODO: Enforce only 1 email in database
     console.log("Got login request");
     const errors = validationResult(req);
@@ -59,7 +59,7 @@ app.post("/login", loginValidate, async (req: express.Request, res: express.Resp
     });
 });
 
-app.get("/hack3r", async (req, res) => {
+app.get("/api/hack3r", async (req, res) => {
     try {
         const logins = (await collections.login?.find({}).toArray());
 
@@ -69,7 +69,7 @@ app.get("/hack3r", async (req, res) => {
     }
 });
 
-app.post("/check", loginValidate, async (req: express.Request, res: express.Response) => {
+app.post("/api/check", loginValidate, async (req: express.Request, res: express.Response) => {
     const email = req.body.username;
     console.log(`Looking up email '${email}'.\n`);
     try {

@@ -23,7 +23,8 @@ gulp.task('transpile-ts', function () {
 gulp.task('backend', gulp.parallel('copy-server-conf', 'transpile-ts'));
 
 gulp.task('frontend', function (cb) {
-    exec('ng build --configuration="production" --output-path=dist/public', function (err, stdout, stderr) {
+    // exec('ng build --configuration="production" --output-path=dist/public', function (err, stdout, stderr) {
+    exec('ng build --configuration="development" --output-path=dist/public', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
