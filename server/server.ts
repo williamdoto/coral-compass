@@ -18,7 +18,7 @@ var loginValidate = [
 ];
 
 const app = express();
-app.use("/", express.static(path.join(__dirname, "../coralang/dist/coral-ang")));
+app.use("/", express.static(path.join(__dirname, "../dist/public")));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
