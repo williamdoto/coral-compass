@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
+import { SignupComponent } from './signup/signup.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import * as mapboxgl from 'mapbox-gl';
     LoginPageComponent,
     MapPageComponent,
     DashboardComponent,
-    AboutComponent
+    AboutComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
