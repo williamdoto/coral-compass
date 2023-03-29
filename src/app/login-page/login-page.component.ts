@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class LoginPageComponent {
 
+  username: string = "";
+  password: string = "";
+
+  login(): void {
+    // Perform login logic here
+  }
 }
