@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env['PORT'] || 4000;
 
 
 
@@ -33,7 +33,8 @@ app.post("/login", loginValidate, async (req: express.Request, res: express.Resp
     console.log("Got login request");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+        res.status(422).json({ errors: errors.array() });
+        return;
     }
     res.send("Hello from server!");
     console.log(req.body);
@@ -74,7 +75,7 @@ app.post("/check", loginValidate, async (req: express.Request, res: express.Resp
     try {
         const login = await collections.login?.find({ "username": email }).toArray();
         if (login?.length) {
-            bcrypt.compare(req.body.password, login[1].hash, (err, result) => {
+            bcrypt.compare(req.body.password, login[1]['hash'], (err, result) => {
                 res.send(`The result is: ${result}.\n`);
             });
         } else {
