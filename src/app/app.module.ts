@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
 import { SignupComponent } from './signup/signup.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { SignupComponent } from './signup/signup.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule, FormsModule
+    CommonModule, FormsModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,9 @@ import { connectToDatabase, collections } from "./services/database.service";
 import bodyParser from "body-parser";
 import * as bcrypt from "bcrypt";
 import config from "./config.json";
+const mongoose = require("mongoose/");
+const account = require("../src/routers/account");
+import cors from 'cors';
 
 const path = require("path");
 
@@ -26,6 +29,7 @@ app.use(bodyParser.json());
 
 const PORT = process.env['PORT'] || 4000;
 
+app.use(cors());
 
 
 app.post("/api/login", loginValidate, async (req: express.Request, res: express.Response) => {
@@ -88,4 +92,8 @@ app.post("/api/check", loginValidate, async (req: express.Request, res: express.
 
 app.listen(PORT, () => console.log(`⚡Server is running here 👉 http://localhost:${PORT}`));
 
+
+
+
 connectToDatabase();
+app.post('/account', account.createAccount);

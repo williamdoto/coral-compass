@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DatabaseService } from '../database.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +13,7 @@ export class SignupComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor() { }
+  constructor(private dbService: DatabaseService, private router: Router) { }
 
   signUp() {
     // Validation and sign up logic goes here
@@ -26,7 +28,11 @@ export class SignupComponent {
       email: this.email,
       password: this.password
     });
+    
 
-    // Implement sign up logic with a service or API call
+    let obj = {username: this.username, email: this.email, password: this.password};
+    this.dbService.createAccount(obj).subscribe(result => {
+      this.router.navigate(["/accountSuccessful"]);
+    });
 }
 }
