@@ -12,6 +12,7 @@ export class SignupComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  db = []
 
   constructor(private dbService: DatabaseService, private router: Router) { }
 
@@ -20,6 +21,15 @@ export class SignupComponent {
     if (this.password !== this.confirmPassword) {
       alert("Passwords do not match!");
       return;
+    }
+    this.dbService.getAccount(this.email).subscribe((data:any) => {
+      this.db = data;
+    })
+    console.log(this.db)
+
+    if (this.db.length != 0) {
+      console.log("Email's already entered")
+      return
     }
 
     // Proceed with sign up

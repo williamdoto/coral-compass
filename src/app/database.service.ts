@@ -9,10 +9,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DatabaseService {
-
   constructor(private http: HttpClient) { }
-  
+
   createAccount(data: any) {
     return this.http.post("http://localhost:4000/account", data, httpOptions);
+  }
+
+  getAccount(email: string) {
+    let url = "http://localhost:4000/account/" + email;
+    return this.http.get(url);
   }
 }

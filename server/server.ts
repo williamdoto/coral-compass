@@ -97,3 +97,4 @@ app.listen(PORT, () => console.log(`⚡Server is running here 👉 http://localh
 
 connectToDatabase();
 app.post('/account', account.createAccount);
+app.get('/account/:email', account.findAccount);
