@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-let accountSchema = mongoose.Schema({
+let accountSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     auto: true,
@@ -18,4 +18,5 @@ let accountSchema = mongoose.Schema({
     required: true,
   }
 });
-module.exports = mongoose.model("Account", accountSchema);
+
+export let Account = mongoose.model("Account", accountSchema);
