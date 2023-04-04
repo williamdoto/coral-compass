@@ -19,4 +19,10 @@ let accountSchema = new mongoose.Schema({
   }
 });
 
-export let Account = mongoose.model("Account", accountSchema);
+// export interface AccountDoc extends Document {
+//   username: string,
+//   email: string,
+//   password: string
+// };
+
+export const Account = mongoose.model("Account", accountSchema);
