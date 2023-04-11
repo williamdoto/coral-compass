@@ -42,14 +42,31 @@ export const findAccount = function (req: express.Request, res: express.Response
 };
 
 export const checkAccount = function (req: express.Request, res: express.Response) {
+    /**
+     * Function that sends a failure response. This is used to keep unkown
+     * email and bad password responses ambiguous for security reasons.
+     */
+    function failResponse() {
+        console.log(`Incorrect email or password`);
+        res.json(`Incorrect email or password`);
+    }
+
     const accountEmail = req.body.email;
     const givenPassword = req.body.password;
     console.log(`Email: ${accountEmail}`);
     Account.findOne({ 'email': accountEmail }).exec()
         .then(function (result) {
-            // asse
-            res.json(result?.username);
-            // bcrypt.compare(givenPassword, result.password)
+            if (result) {
+                bcrypt.compare(givenPassword, result.password, async function(err, same) {
+                    if (same) {
+                        res.json("Success"); // TODO: Do something with this success
+                    } else {
+                        failResponse();
+                    }
+                });
+            } else {
+                failResponse();
+            }
         })
         .catch(reason => res.json(`Failed for reason '${reason}'`))
 };
