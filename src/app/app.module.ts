@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
 import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GraphPageComponent } from './graph-page/graph-page.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -23,12 +25,16 @@ import { HttpClientModule } from '@angular/common/http';
     MapPageComponent,
     DashboardComponent,
     AboutComponent,
-    SignupComponent
+    SignupComponent,
+    GraphPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule, FormsModule, HttpClientModule
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

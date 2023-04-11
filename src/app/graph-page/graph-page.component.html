@@ -1,0 +1,10 @@
+<!-- Based off https://valor-software.com/ng2-charts/#BarChart  [plugins]="barChartPlugins"-->
+<canvas baseChart class="chart"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+</canvas>
+
+<button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
