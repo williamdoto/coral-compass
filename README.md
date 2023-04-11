@@ -12,6 +12,9 @@ FIT3162 Semester 1 2023
 - Install nodejs, and mongodb (maybe angular cli as well?)
 - `npm install`
 
+### Configurration
+See [here](./server/README.md) to set up the server config file.
+
 ## Running
 ### Using npm
 ```
