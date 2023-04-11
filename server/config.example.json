@@ -1,10 +1,6 @@
 {
     "mongoDB": {
-        "connectionString": "mongodb://localhost:27017/",
-        "dbName": "test",
-        "collections": {
-            "login": "login"
-        },
-        "bcryptSaltRounds": 10
-    }
+        "connectionString": "mongodb://localhost:27017/CoralReef"
+    },
+    "bcryptSaltRounds": 10
 }

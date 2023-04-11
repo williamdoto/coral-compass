@@ -72,7 +72,7 @@ app.post("/api/login", loginValidate, account.createAccount);
 //     }
 // });
 
-app.post("/api/check", loginValidate, account.findAccount);
+app.post("/api/check", loginValidate, account.checkAccount);
 // app.post("/api/check", loginValidate, async (req: express.Request, res: express.Response) => {
 //     const email = req.body.username;
 //     console.log(`Looking up email '${email}'.\n`);

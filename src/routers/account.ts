@@ -6,23 +6,28 @@ import { Account } from "../models/account";
 
 export const createAccount = async function (req: express.Request, res: express.Response) {
     // Hash the password
-    bcrypt.hash(req.body.password, config.mongoDB.bcryptSaltRounds, async function (err, hash) {
+    bcrypt.hash(req.body.password, config.bcryptSaltRounds, async function (err, hash) {
         // The password has been hashed, store it in the database.
         let theAccount = new Account({ username: req.body.username, email: req.body.email, password: hash });
         try {
             const docs = await Account.find({ 'email': theAccount.email });
+            console.log(docs);
             if (docs.length === 0) {
                 try {
                     await theAccount.save();
                     console.log('User saved successfully');
+                    res.send('User saved successfully');
                 } catch (error) {
                     console.error('Error saving user:', error);
+                    res.send('Error saving user');
                 }
             } else {
                 console.log("Duplicate user found");
+                res.send("Duplicate user found");
             }
         } catch (error) {
             console.error('Error fetching account:', error);
+            res.send('Error fetching account:');
         }
         // TODO: Respond to requests
     });
@@ -36,12 +41,15 @@ export const findAccount = function (req: express.Request, res: express.Response
         .then(result => res.json(result));
 };
 
-// export const checkAccount = function (req: express.Request, res: express.Response) {
-//     const accountEmail = req.body.email;
-//     console.log(`Email: ${accountEmail}`);
-//     Account.findOne({ 'email': accountEmail }).exec()
-//         .catch(reason => res.json(`Failed for reason '${reason}'`))
-//         .then(function(result:AccountDoc | null) {
-//             res.json(result);
-//         });
-// };
+export const checkAccount = function (req: express.Request, res: express.Response) {
+    const accountEmail = req.body.email;
+    const givenPassword = req.body.password;
+    console.log(`Email: ${accountEmail}`);
+    Account.findOne({ 'email': accountEmail }).exec()
+        .then(function (result) {
+            // asse
+            res.json(result?.username);
+            // bcrypt.compare(givenPassword, result.password)
+        })
+        .catch(reason => res.json(`Failed for reason '${reason}'`))
+};
