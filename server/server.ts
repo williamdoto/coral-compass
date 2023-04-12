@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import * as bcrypt from "bcrypt";
 import config from "./config.json";
 import * as account from "../src/routers/account";
+import * as general from "../src/routers/general";
 import cors from 'cors';
 
 import path from "path";
@@ -98,3 +99,4 @@ app.listen(PORT, () => console.log(`⚡Server is running here 👉 http://localh
 connectToDatabase();
 app.post('/account', account.createAccount);
 app.get('/account/:email', account.findAccount);
+app.get('/general', general.findLocation);

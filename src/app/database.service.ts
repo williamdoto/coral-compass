@@ -19,4 +19,8 @@ export class DatabaseService {
     let url = "http://localhost:4000/account/" + email;
     return this.http.get(url);
   }
+
+  getGeneral() {
+    return this.http.get("http://localhost:4000/general/");
+  }
 }

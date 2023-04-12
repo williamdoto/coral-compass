@@ -1,5 +1,6 @@
 import { Component,OnInit,ChangeDetectorRef,AfterViewInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { DatabaseService } from '../database.service';
 import { environment } from './environment';
 
 @Component({
@@ -10,6 +11,9 @@ import { environment } from './environment';
 export class MapPageComponent {
   map!: mapboxgl.Map;
   markers: any[] = [];
+  db: any[] = []
+
+  constructor(private dbService: DatabaseService) { }
 
   ngOnInit(): void {
   }
@@ -25,13 +29,21 @@ export class MapPageComponent {
       zoom: 12
     });
     this.map.addControl(new mapboxgl.NavigationControl());
-    const marker1 = new mapboxgl.Marker()
-    .setLngLat([-74.5, 40.5])
-    .setPopup(new mapboxgl.Popup().setHTML('<h3>Example Marker 1</h3><p>Description for marker 1.</p>'))
-    .addTo(this.map);
 
-    this.markers.push(marker1);
+    this.dbService.getGeneral().subscribe((data: any) => {
+      this.db = data;
+      console.log(data)
+      for (let i = 0; i < this.db.length; i++){
+        if (this.db[i]["decimalLongitude"] != null && this.db[i]["decimalLongitude"] != undefined){
+        let marker1 = new mapboxgl.Marker()
+        .setLngLat([parseInt(this.db[i]["decimalLongitude"]), parseInt(this.db[i]["decimalLatitude"])])
+        .addTo(this.map);
+        this.markers.push(marker1);
+        }
+      }
+    });
 
+    // .setPopup(new mapboxgl.Popup().setHTML('<h3>Example Marker 1</h3><p>Description for marker 1.</p>'))
 
   }
   
