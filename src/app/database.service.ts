@@ -23,5 +23,9 @@ export class DatabaseService {
   getGeneral() {
     return this.http.get("api/general/");
   }
+
+  getScientificNames() {
+    return this.http.get("api/scientific-names");
+  }
   
 }
