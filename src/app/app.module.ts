@@ -10,11 +10,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import * as mapboxgl from 'mapbox-gl';
 import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphPageComponent } from './graph-page/graph-page.component';
 import { NgChartsModule } from 'ng2-charts';
+import { GraphPieChartComponent } from './graph-pie-chart/graph-pie-chart.component';
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardComponent,
     AboutComponent,
     SignupComponent,
-    GraphPageComponent
+    GraphPageComponent,
+    GraphPieChartComponent
   ],
   imports: [
     BrowserModule,
