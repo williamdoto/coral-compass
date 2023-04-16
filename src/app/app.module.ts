@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GraphPageComponent } from './graph-page/graph-page.component';
 import { NgChartsModule } from 'ng2-charts';
 import { GraphPieChartComponent } from './graph-pie-chart/graph-pie-chart.component';
+import { GraphSpeciesBarComponent } from './graph-species-bar/graph-species-bar.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { GraphPieChartComponent } from './graph-pie-chart/graph-pie-chart.compon
     AboutComponent,
     SignupComponent,
     GraphPageComponent,
-    GraphPieChartComponent
+    GraphPieChartComponent,
+    GraphSpeciesBarComponent
   ],
   imports: [
     BrowserModule,
