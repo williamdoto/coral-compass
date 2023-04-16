@@ -1,8 +1,18 @@
 import express from "express";
 import * as bcrypt from "bcrypt";
+import { check, validationResult } from "express-validator";
 import config from "../../server/config.json";
 
 import { Account } from "../models/account";
+
+// https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/
+export const loginValidate = [
+    check('email', 'Username Must Be an Email Address').isEmail().normalizeEmail()
+    // check('password').isLength({ min: 8 })
+    //     .withMessage('Password Must Be at Least 8 Characters')
+    //     .matches('[0-9]').withMessage('Password Must Contain a Number')
+    //     .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter')];
+];
 
 export const createAccount = async function (req: express.Request, res: express.Response) {
     // Hash the password

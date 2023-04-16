@@ -1,5 +1,4 @@
 import express from "express";
-import config from "../../server/config.json";
 
 import { General } from "../models/general";
 
