@@ -3,10 +3,7 @@ import { connectToDatabase } from "./services/database.service";
 import bodyParser from "body-parser";
 import * as account from "../src/routers/account";
 import * as general from "../src/routers/general";
-import * as species from "../src/routers/species";
-import cors from 'cors';
-
-import path from "path";
+import * as species from "../src/routers/taxon";
 
 connectToDatabase();
 
@@ -18,8 +15,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 const PORT = process.env['PORT'] || 4000;
-
-app.use(cors());
 
 app.post("/api/login", account.loginValidate, account.createAccount);
 
