@@ -3,7 +3,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
-import { ScientificNameCount } from '../../models/taxon';
+import { GenusNameCount } from '../../models/taxon';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
@@ -14,7 +14,7 @@ import { ScientificNameCount } from '../../models/taxon';
 })
 export class GraphSpeciesBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  db: ScientificNameCount[] = []
+  db: GenusNameCount[] = []
   constructor(private dbService: DatabaseService) { }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -64,11 +64,13 @@ export class GraphSpeciesBarComponent {
     console.log(event, active);
   }
 
+  public dataLimit:number = 20;
+
   /**
  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
  */
   loadData(): void {
-    this.dbService.getScientificNames().subscribe((data: any) => {
+    this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
       // Have got the data
       this.db = data;
       console.log(data);

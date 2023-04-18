@@ -1,34 +1,46 @@
 import express from "express";
+import { GenusNameCount, Taxon } from "../models/taxon";
 
-import { Taxon, ScientificNameCount } from "../models/taxon";
+import { check, validationResult } from "express-validator";
 
-export const countScientificNames = function (req: express.Request, res: express.Response) {
+export const countGenusValidate = [
+    check('limit', 'The limit must be an integer > 0').isInt({min: 1}).toInt()
+];
+
+export const countGenus = function (req: express.Request, res: express.Response) {
+    // Obtain and sanitise the parameters.
+    // Check for errors (based off https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/).
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+        return;
+    }
+    const limitTest = req.query["limit"];
+    if (typeof limitTest !== "number") {
+        throw new Error("Validation failed, was expecting a number");
+    }
+    const limit:number = limitTest;
+
     /**
-     * Groups by the first word of the scientific name (could probably be done
-     * as part of the request)
-     * // NOTE: This is actually just extracting the genus, so not needed.
+     * Returns a function that will process an array of `GenusNameCount` and
+     * convert the bottom portion into "other".
+     * @param limit The maximum number of genuses to include before aggregating to "other".
      */
-    function aggregateSimilar(data:ScientificNameCount[]): ScientificNameCount[] {
-        let aggregated:{[_id: string]:ScientificNameCount} = {};
-        // For each data point, add it to a dictionary where the key is the first part of the name.
-        for (let i in data) {
-            let shortname = data[i]._id.split(' ', 1)[0];
-            if (aggregated[shortname]) {
-                // Already come across this species before.
-                aggregated[shortname].count += data[i].count;
-            } else {
-                aggregated[shortname] = {
-                    _id: shortname,
-                    count: data[i].count
-                };
-            }
+    function reduceToOther(limit: number): (data: GenusNameCount[]) => GenusNameCount[] {
+        return function (data) {
+            let result = data.slice(0, limit);
+            return result.concat([{
+                _id: "Other",
+                count: data.length - limit
+            }]);
         }
-        // Return the disctionary as a list.
-        return Object.values(aggregated);
     }
 
-    Taxon.aggregate().sortByCount("scientificName").exec()
-        .then(data => res.json(aggregateSimilar(data)))
+    // Count all elements where the genus is not null and serve the result.
+    Taxon.aggregate().match({
+        genus: { $ne: null }
+    })
+        .sortByCount("genus").exec()
+        .then(data => res.json(reduceToOther(limit)(data)))
         .catch(reason => res.json(`Failed for reason '${reason}'`));
-        // .then(result => res.json(result));
 };

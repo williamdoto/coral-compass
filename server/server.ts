@@ -3,7 +3,7 @@ import { connectToDatabase } from "./services/database.service";
 import bodyParser from "body-parser";
 import * as account from "../src/routers/account";
 import * as general from "../src/routers/general";
-import * as species from "../src/routers/taxon";
+import * as taxon from "../src/routers/taxon";
 
 connectToDatabase();
 
@@ -22,6 +22,6 @@ app.post("/api/check", account.loginValidate, account.checkAccount);
 app.post('/api/account', account.createAccount);
 app.get('/api/account/:email', account.findAccount);
 app.get('/api/general', general.findLocation);
-app.get('/api/scientific-names', species.countScientificNames);
+app.get('/api/genus-count', taxon.countGenusValidate, taxon.countGenus);
 
 app.listen(PORT, () => console.log(`⚡Server is running here 👉 http://localhost:${PORT}`));

@@ -24,8 +24,15 @@ export class DatabaseService {
     return this.http.get("api/general/");
   }
 
-  getScientificNames() {
-    return this.http.get("api/scientific-names");
+  getGenusNames(limit:number) {
+    return this.http.get(
+      "api/genus-count/",
+      {
+        params: {
+          limit: limit
+        }
+      }
+    );
   }
   
 }

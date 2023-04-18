@@ -7,7 +7,7 @@ import { Account } from "../models/account";
 
 // https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/
 export const loginValidate = [
-    check('email', 'Username Must Be an Email Address').isEmail().normalizeEmail()
+    check('email', 'Username Must Be an Email Address').isEmail().trim().escape().normalizeEmail()
     // check('password').isLength({ min: 8 })
     //     .withMessage('Password Must Be at Least 8 Characters')
     //     .matches('[0-9]').withMessage('Password Must Contain a Number')
@@ -15,6 +15,12 @@ export const loginValidate = [
 ];
 
 export const createAccount = async function (req: express.Request, res: express.Response) {
+    // Check for errors (based off https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/).
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+        return;
+    }
     // Hash the password
     bcrypt.hash(req.body.password, config.bcryptSaltRounds, async function (err, hash) {
         // The password has been hashed, store it in the database.
