@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 
 })
 export class DashboardComponent implements OnInit{
-  imageUrls = []
+  imageUrls = ["https://cdn.pixabay.com/photo/2016/03/27/17/12/water-1283152_960_720.jpg","https://cdn.pixabay.com/photo/2023/03/28/02/53/lagoon-7882110_960_720.jpg"]
   imageUrl = this.imageUrls[0]
   currentIndex = 0
 
