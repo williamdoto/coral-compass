@@ -3,12 +3,9 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
+import { ScientificNameCount } from '../../models/taxon';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
-type ScientificNameCount = {
-  _id: string;
-  count: number;
-};
 
 @Component({
   selector: 'app-graph-species-bar',
@@ -23,11 +20,18 @@ export class GraphSpeciesBarComponent {
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      x: {},
+      x: {
+        title: {
+          display: true,
+          text: "Scientific name"
+        }
+      },
       y: {
-        min: 10
+        title: {
+          display: true,
+          text: "Number sampled"
+        }
       }
     },
     plugins: {
@@ -38,7 +42,7 @@ export class GraphSpeciesBarComponent {
         anchor: 'end',
         align: 'end'
       }
-    }
+    },
   };
   public barChartData: ChartData<'bar'> = {
     labels: [],

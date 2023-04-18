@@ -3,13 +3,9 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
+import { ScientificNameCount } from '../../models/taxon';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
-
-type ScientificNameCount = {
-  _id: string;
-  count: number;
-};
 
 @Component({
   selector: 'app-graph-pie-chart',
