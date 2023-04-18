@@ -10,12 +10,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import * as mapboxgl from 'mapbox-gl';
 import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
-import { GraphPageComponent } from './graph-page/graph-page.component';
-import { NgChartsModule } from 'ng2-charts';
-import { GraphPieChartComponent } from './graph-pie-chart/graph-pie-chart.component';
-import { GraphSpeciesBarComponent } from './graph-species-bar/graph-species-bar.component';
 
 
 @NgModule({
@@ -26,18 +23,12 @@ import { GraphSpeciesBarComponent } from './graph-species-bar/graph-species-bar.
     MapPageComponent,
     DashboardComponent,
     AboutComponent,
-    SignupComponent,
-    GraphPageComponent,
-    GraphPieChartComponent,
-    GraphSpeciesBarComponent
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    NgChartsModule
+    CommonModule, FormsModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
