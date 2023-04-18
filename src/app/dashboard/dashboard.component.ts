@@ -16,10 +16,21 @@ export class DashboardComponent implements OnInit{
     this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length
     this.imageUrl = this.imageUrls[this.currentIndex];
   }
+  
+  nextImage(){
+    if (this.currentIndex > this.imageUrls.length)    this.currentIndex = 0
+    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length
+    this.imageUrl = this.imageUrls[this.currentIndex];
+  }
+
+  prevImage(){
+    this.currentIndex = (this.currentIndex - 1) % this.imageUrls.length
+    this.imageUrl = this.imageUrls[this.currentIndex];
+  }
 
   ngOnInit() {
     setInterval(() => {
       this.changeImage();
-    }, 2000)
+    }, 6000)
   }
 }
