@@ -55,4 +55,10 @@ let taxonSchema = new mongoose.Schema({
   },
 });
 
+export type GenusNameCount = {
+  _id: string;
+  count: number;
+  genusesContained?: number;
+};
+
 export const Taxon = mongoose.model("Taxon", taxonSchema, "Taxon");
