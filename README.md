@@ -11,6 +11,7 @@ FIT3162 Semester 1 2023
 ## Installation
 - Install nodejs, and mongodb (maybe angular cli as well?)
 - `npm install`
+- If installing on a linux webserver using systemd, copy or symlink the service files in the [`linux`](linux) folder to `/etc/systemd/system/`. Then run `sudo systemctl daemon-reload` followed by `sudo systemctl enable coral-reef-monitor` and `sudo systemctl start coral-reef-monitor`. These commands refresh the list of services, sets the website to start on boot and starts it now respectively.
 
 ### Configurration
 See [here](./server/README.md) to set up the server config file.

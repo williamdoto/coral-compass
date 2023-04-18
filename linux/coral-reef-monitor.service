@@ -1,0 +1,14 @@
+[Unit]
+Description=Coral Reef Monitor service
+StartLimitIntervalSec=0
+After=network-online.target
+Wants=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=bash linux/run.sh
+WorkingDirectory=/home/fit3162/coral-reef-monitor
+User=fit3162
