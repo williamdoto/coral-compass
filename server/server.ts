@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import * as account from "../src/routers/account";
 import * as general from "../src/routers/general";
 import * as taxon from "../src/routers/taxon";
+import { urls } from "./urls";
 
 connectToDatabase();
 
@@ -16,12 +17,10 @@ app.use(bodyParser.json());
 
 const PORT = process.env['PORT'] || 4000;
 
-app.post("/api/login", account.loginValidate, account.createAccount);
-
-app.post("/api/check", account.loginValidate, account.checkAccount);
-app.post('/api/account', account.createAccount);
-app.get('/api/account/:email', account.findAccount);
-app.get('/api/general', general.findLocation);
-app.get('/api/genus-count', taxon.countGenusValidate, taxon.countGenus);
+app.post(urls.account.create, account.loginValidate, account.createAccount);
+app.post(urls.account.check, account.loginValidate, account.checkAccount);
+app.get(urls.account.find, account.findAccount);
+app.get(urls.general, general.findLocation);
+app.get(urls.genusCounts, taxon.countGenusValidate, taxon.countGenus);
 
 app.listen(PORT, () => console.log(`⚡Server is running here 👉 http://localhost:${PORT}`));
