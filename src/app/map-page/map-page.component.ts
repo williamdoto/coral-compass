@@ -4,6 +4,7 @@ import { DatabaseService } from '../database.service';
 import { environment } from './environment';
 import { FeatureCollection, Point } from '@turf/helpers';
 import { MapMouseEvent } from 'mapbox-gl';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-map-page',
@@ -32,19 +33,33 @@ export class MapPageComponent implements OnInit, AfterViewInit {
     this.map.on('load', () => {
       this.dbService.getGeneral().subscribe((data: any) => {
         this.db = data;
-        const geojson:  FeatureCollection<Point>= {
-          type: 'FeatureCollection',
-          features: this.db.map(item => {
-            return {
-              type: 'Feature',
-              properties: {scientificName: item.scientificName},
-              geometry: {
-                type: 'Point',
-                coordinates: [parseFloat(item.decimalLongitude), parseFloat(item.decimalLatitude)]
-              }
-            };
-          })
-        };
+        const coordinatesMap = new Map<string, { count: number, scientificName: string }>();
+
+        this.db.forEach(item => {
+          const key = `${parseFloat(item.decimalLongitude)},${parseFloat(item.decimalLatitude)}`;
+          const entry = coordinatesMap.get(key);
+  
+          if (entry) {
+            entry.count += 1;
+          } else {
+            coordinatesMap.set(key, { count: 1, scientificName: item.scientificName });
+          }
+        });
+
+      const geojson: FeatureCollection<Point> = {
+        type: 'FeatureCollection',
+        features: Array.from(coordinatesMap.entries()).map(([key, value]) => {
+          const [lng, lat] = key.split(',').map(Number);
+          return {
+            type: 'Feature',
+            properties: { count: value.count, scientificName: value.scientificName },
+            geometry: {
+              type: 'Point',
+              coordinates: [lng, lat]
+            }
+          };
+        })
+      };
 
         this.map.addSource('markers', {
           type: 'geojson',
@@ -106,6 +121,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
           }
         });
       });
+      
     });
 
     this.map.on('click', 'unclustered-points', (e: MapMouseEvent) => {
@@ -117,6 +133,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
     const feature = features[0] as mapboxgl.MapboxGeoJSONFeature;
     const coordinates = (feature.geometry as Point).coordinates.slice();
     const sName =  feature.properties ? feature.properties['scientificName'] : 'Unknown';
+    const count =  feature.properties ? feature.properties['count'] : 'Unknown';
 
       // Ensure that if the map is zoomed out such that
       // multiple copies of the feature are visible, the
@@ -125,7 +142,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
        
-      new mapboxgl.Popup().setLngLat([coordinates[0],coordinates[1]]).setHTML(`Scientific Name: ${sName}<br>`).addTo(this.map);
+      new mapboxgl.Popup().setLngLat([coordinates[0],coordinates[1]]).setHTML(`Scientific Name: ${sName}<br>Count: ${count}`).addTo(this.map);
       });
 
       this.map.on('click', 'clusters', (e: MapMouseEvent) => {
