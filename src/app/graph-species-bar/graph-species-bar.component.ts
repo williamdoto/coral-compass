@@ -64,7 +64,9 @@ export class GraphSpeciesBarComponent {
     console.log(event, active);
   }
 
-  public dataLimit:number = 20;
+  public dataLimit: number = 20;
+  public otherGenusCount: number = 0;
+  public mostPopular: string = "";
 
   /**
  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
@@ -73,11 +75,17 @@ export class GraphSpeciesBarComponent {
     this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
       // Have got the data
       this.db = data;
-      console.log(data);
+      console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
       this.barChartData.labels = this.db.map(species => species._id);
       this.barChartData.datasets[0].data = this.db.map(species => species.count);
+
+      // Get the number of genuses in the other category.
+      this.otherGenusCount = this.db.find(value => value.genusesContained)?.genusesContained ?? 0;
+
+      // Add the most popular genus
+      this.mostPopular = this.db[0]._id;
 
       this.chart?.update();
     });

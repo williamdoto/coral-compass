@@ -28,11 +28,18 @@ export const countGenus = function (req: express.Request, res: express.Response)
      */
     function reduceToOther(limit: number): (data: GenusNameCount[]) => GenusNameCount[] {
         return function (data) {
-            let result = data.slice(0, limit);
-            return result.concat([{
+            const namedPart = data.slice(0, limit);
+            // Calculate and add "other".
+            let combined = namedPart.concat([{
                 _id: "Other",
-                count: data.length - limit
+                count: data.slice(limit).reduce(
+                    (prev:number, cur:GenusNameCount) => prev + cur.count,
+                    0
+                ), // Sum the count components
+                genusesContained: data.length - limit
             }]);
+            // Sort in descending order (other will likely have moved up a few places)
+            return combined.sort((a, b) => b.count - a.count);
         }
     }
 
