@@ -1,0 +1,8 @@
+body {
+    background-color: #333333;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    height: calc(100vh - 50px);
+}

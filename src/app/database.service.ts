@@ -3,7 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { urls } from '../../server/urls';
 
 const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" }),
+  headers: new HttpHeaders({ "Content-Type": "application/json" })
+};
+
+const formHttpOptions = {
+  headers: new HttpHeaders({ "Content-Type": "application/x-www-form-urlencoded" })
 };
 
 @Injectable({
@@ -14,6 +18,11 @@ export class DatabaseService {
 
   createAccount(data: any) {
     return this.http.post(urls.account.create, data, httpOptions);
+  }
+
+  login(email:string, password:string) {
+    const body = `email=${email}&password=${password}`;
+    return this.http.post(urls.account.login, body, formHttpOptions);
   }
 
   getAccount(email: string) {

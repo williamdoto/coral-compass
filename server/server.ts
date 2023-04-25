@@ -20,7 +20,9 @@ app.use("/", express.static(angularPath));
 // Initialise session variables.
 const sesh:session.SessionOptions = {
     secret: config.sessionSecret,
-    cookie: {},
+    cookie: {
+        maxAge: 3600000*24 // 1 day
+    },
     resave: false,
     saveUninitialized: false
 }
@@ -34,7 +36,7 @@ app.use(bodyParser.json());
 
 // Various routes that the server will handle. These should all start with '/api/' for the development 
 app.post(urls.account.create, account.loginValidate, account.createAccount);
-app.post(urls.account.check, account.loginValidate, account.checkAccount);
+app.post(urls.account.login, account.loginValidate, account.login);
 app.get(urls.account.find, account.findAccount);
 app.get(urls.general, general.findLocation);
 app.get(urls.genusCounts, taxon.countGenusValidate, taxon.countGenus);

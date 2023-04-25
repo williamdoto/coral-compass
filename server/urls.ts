@@ -3,9 +3,9 @@
  */
 export const urls = {
     account: {
-        create: "/api/create",
-        check: "/api/check",
-        find: "/api/account/:email"
+        create: "/api/create-account",
+        login: "/api/login",
+        find: "/api/account"
     },
     general: "/api/general",
     genusCounts: "/api/genus-counts"
