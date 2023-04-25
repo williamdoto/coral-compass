@@ -1,1 +1,13 @@
-<div class="map" id="map" class="match-parent"></div>
+<div class="container">
+    <div class="row mt-2">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by Scientific Name"
+          (input)="searchByScientificName($event.target)"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="map" id="map" class="match-parent"></div>

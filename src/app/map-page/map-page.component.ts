@@ -5,6 +5,7 @@ import { environment } from './environment';
 import { FeatureCollection, Point } from '@turf/helpers';
 import { MapMouseEvent } from 'mapbox-gl';
 import * as turf from '@turf/turf';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Component({
   selector: 'app-map-page',
@@ -14,6 +15,7 @@ import * as turf from '@turf/turf';
 export class MapPageComponent implements OnInit, AfterViewInit {
   map!: mapboxgl.Map;
   db: any[] = [];
+  queryDB: any[] = [];
 
   constructor(private dbService: DatabaseService) { }
 
@@ -169,5 +171,49 @@ export class MapPageComponent implements OnInit, AfterViewInit {
           });
         }
       });
+  }
+
+  searchByScientificName(target: EventTarget | null): void {
+    if (target instanceof HTMLInputElement) {
+      const query = target.value;
+      this.updateMarkers(query);
+    }
+  }
+
+  updateMarkers(query: string): void {
+    const formattedQuery = query.toLowerCase().trim();
+    const filteredData = this.db.filter(item => {
+      return item.scientificName.toLowerCase().includes(formattedQuery);
+    });
+  
+    const coordinatesMap = new Map<string, { count: number, scientificName: string }>();
+  
+    filteredData.forEach(item => {
+      const key = `${parseFloat(item.decimalLongitude)},${parseFloat(item.decimalLatitude)}`;
+      const entry = coordinatesMap.get(key);
+  
+      if (entry) {
+        entry.count += 1;
+      } else {
+        coordinatesMap.set(key, { count: 1, scientificName: item.scientificName });
+      }
+    });
+  
+    const geojson: FeatureCollection<Point> = {
+      type: 'FeatureCollection',
+      features: Array.from(coordinatesMap.entries()).map(([key, value]) => {
+        const [lng, lat] = key.split(',').map(Number);
+        return {
+          type: 'Feature',
+          properties: { count: value.count, scientificName: value.scientificName },
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat]
+          }
+        };
+      })
+    };
+  
+    (this.map.getSource('markers') as mapboxgl.GeoJSONSource).setData(geojson);
   }
 }
