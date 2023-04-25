@@ -17,7 +17,7 @@ FIT3162 Semester 1 2023
 See [here](./server/README.md) to set up the server config file.
 
 ## Running
-### Using npm
+### Development
 ```
 npm run start
 ```
@@ -27,5 +27,14 @@ Go to [localhost:4200](localhost:4200) using a web browser.
 
 When a file is edited, the server will automatically be restarted and angular will be rebuilt.
 
-### Using gulp
-This is a work in progress. Don't use it for now.
+### Production
+Build the angular frontend and transpile the server typescript using:
+```
+npm run build-client
+npm run build-server
+```
+
+Start the server using:
+```
+npm run production
+```
