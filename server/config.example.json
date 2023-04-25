@@ -2,5 +2,7 @@
     "mongoDB": {
         "connectionString": "mongodb://localhost:27017/CoralReef"
     },
-    "bcryptSaltRounds": 10
+    "bcryptSaltRounds": 10,
+    "sessionSecret": "something-randomly-generated",
+    "port": 4000
 }
