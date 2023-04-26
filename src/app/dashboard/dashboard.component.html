@@ -4,18 +4,24 @@
         <title>Dashboard</title>
         <link rel="stylesheet" href="./dashboard.component.css">
     </head>
-
 <div class="container">
-
+    <button class="button" type="button" id="prev" (click) = "prevImage()"></button>
     <div class="wrapper">
-        <button class="prev" (click) = "prevImage()"></button>
         <img [src]="imageUrl" alt="Image">
-        <button class="next" (click) = "nextImage()"></button>
     </div>
+    <button class="button" type="button" id="next" (click) = "nextImage()"></button>
 </div>
-
-<div class="wikiLeft">
-    <h1>A coral reef is an underwater ecosystem characterized by reef-building corals. Reefs are formed of colonies of coral polyps held together by calcium carbonate. Most coral reefs are built from stony corals, whose polyps cluster in groups.</h1>
+<div class="container">
+    <div class="card text-bg-dark">
+        <img src="https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_11/2596211/181008-coral-reef-climate-mc-955.JPG" class="card-img" alt="">
+        <div class="card-img-overlay">
+          <h5 class="card-title">Coral Reef</h5>
+          <p class="card-text"> 
+            A coral reef is an underwater ecosystem characterized by reef-building corals. 
+            Reefs are formed of colonies of coral polyps held together by calcium carbonate. 
+            Most coral reefs are built from stony corals, whose polyps cluster in groups.</p>
+            <a href="#" class="btn btn-primary" routerLink="/map">View Now</a>
+        </div>
+      </div>
 </div>
-
 </html>
