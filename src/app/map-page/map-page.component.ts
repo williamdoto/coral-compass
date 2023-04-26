@@ -4,8 +4,6 @@ import { DatabaseService } from '../database.service';
 import { environment } from './environment';
 import { FeatureCollection, Point } from '@turf/helpers';
 import { MapMouseEvent } from 'mapbox-gl';
-import * as turf from '@turf/turf';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Component({
   selector: 'app-map-page',
