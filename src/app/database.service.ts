@@ -34,6 +34,10 @@ export class DatabaseService {
     return this.http.get(urls.general);
   }
 
+  getTaxon(name:string) {
+    return this.http.get("/api/taxon/" + name);
+  }
+
   getGenusNames(limit:number) {
     return this.http.get(
       urls.genusCounts,

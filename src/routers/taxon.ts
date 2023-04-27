@@ -3,6 +3,17 @@ import { GenusNameCount, Taxon } from "../models/taxon";
 
 import { check, validationResult } from "express-validator";
 
+export const findSpecies = function (req: express.Request, res: express.Response) {
+    Taxon.find({'scientificName': req.params["name"]}).exec()
+        .catch(reason => res.json(`Failed for reason '${reason}'`))
+        .then(result => res.json(result));
+};
+
+// export const findLocation = function (req: express.Request, res: express.Response) {
+//     General.find().exec()
+//         .catch(reason => res.json(`Failed for reason '${reason}'`))
+//         .then(result => res.json(result));
+// };
 export const countGenusValidate = [
     check('limit', 'The limit must be an integer > 0').isInt({min: 1}).toInt()
 ];

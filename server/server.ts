@@ -39,6 +39,7 @@ app.post(urls.account.create, account.loginValidate, account.createAccount);
 app.post(urls.account.login, account.loginValidate, account.login);
 app.get(urls.account.find, account.findAccount);
 app.get(urls.general, general.findLocation);
+app.get(urls.taxon, taxon.findSpecies);
 app.get(urls.genusCounts, taxon.countGenusValidate, taxon.countGenus);
 
 app.listen(config.port, () => console.log(`⚡Server is running here 👉 http://localhost:${config.port}`));

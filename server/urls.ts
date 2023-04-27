@@ -8,5 +8,6 @@ export const urls = {
         find: "/api/account"
     },
     general: "/api/general",
-    genusCounts: "/api/genus-counts"
+    genusCounts: "/api/genus-counts",
+    taxon:"/api/taxon/:name"
 };
