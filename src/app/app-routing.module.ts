@@ -7,6 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { MapPageComponent } from './map-page/map-page.component';
 import { SignupComponent } from './signup/signup.component';
 import { GraphPageComponent } from './graph-page/graph-page.component';
+import { ImportComponent } from './import/import.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: "about", component: AboutComponent },
     { path: "signup", component: SignupComponent },
     { path: "graph", component: GraphPageComponent },
+    { path: "import", component: ImportComponent },
     { path: "", component: DashboardComponent },
 ];
 

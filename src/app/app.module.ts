@@ -18,6 +18,7 @@ import { GraphPieChartComponent } from './graph-pie-chart/graph-pie-chart.compon
 import { GraphSpeciesBarComponent } from './graph-species-bar/graph-species-bar.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImportComponent } from './import/import.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SignupComponent,
     GraphPageComponent,
     GraphPieChartComponent,
-    GraphSpeciesBarComponent
+    GraphSpeciesBarComponent,
+    ImportComponent
   ],
   imports: [
     BrowserModule,
