@@ -21,7 +21,7 @@ enum AccountType {
 }
 
 // Based off https://github.com/expressjs/session/issues/799#issuecomment-968082380
-interface SessionData extends session.Session {
+export interface SessionData extends session.Session {
     role?: AccountType;
 }
 

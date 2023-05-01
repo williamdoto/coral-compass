@@ -40,7 +40,7 @@ export class GraphPieChartComponent {
   };
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [DatalabelsPlugin];
-  public dataLimit: number = 10;
+  public dataLimit: number = 5;
 
   // events
   public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
