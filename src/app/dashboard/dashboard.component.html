@@ -56,11 +56,11 @@
     </style>
 </head>
 <div class="container">
-    <button class="button" type="button" id="prev" (click) = "prevImage()"></button>
-    <div class="wrapper">
-        <img [src]="imageUrl" alt="Image">
+    <button class="arrow-btn left" id="prev" (click) = "prevImage()"></button>
+    <div class="image-container">
+        <img [src]="imageUrl" alt="Images">         
     </div>
-    <button class="button" type="button" id="next" (click) = "nextImage()"></button>
+    <button class="arrow-btn right" id="next" (click) = "nextImage()"></button>
 </div>
 <body>
     <div class="container">
@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <h5 class="card-title">About</h5>
                         <p class="card-text">See the people behind the movement. Find out about our Mission</p>
-                        <a href="#" class="btn btn-primary" routerLink="/graph">View Now</a>
+                        <a href="#" class="btn btn-primary" routerLink="/about">View Now</a>
                     </div>
                 </div>
             </div>

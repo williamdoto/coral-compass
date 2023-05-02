@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { clearInterval } from 'timers';
 
 @Component({
   selector: 'app-dashboard',
