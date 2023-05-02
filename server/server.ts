@@ -17,6 +17,13 @@ const app = express();
 const angularPath = path.join(__dirname, "../../coral-reef-monitor");
 app.use("/", express.static(angularPath));
 
+// Redirect pages to index.html as angular is a single page application.
+// Based on https://stackoverflow.com/a/42922998
+app.all('/*', function(req, res) {
+    // Send the index.html for other files to support HTML5Mode
+    res.sendFile('index.html', { root: angularPath });
+});
+
 // Initialise session variables.
 const sesh:session.SessionOptions = {
     secret: config.sessionSecret,
