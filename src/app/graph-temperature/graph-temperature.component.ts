@@ -2,8 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
+import 'chartjs-adapter-date-fns';
 import { DatabaseService } from '../database.service';
-import { GenusNameCount } from '../../models/taxon';
+import { Temperatures } from '../../models/temperature';
 
 @Component({
   selector: 'app-graph-temperature',
@@ -12,7 +13,7 @@ import { GenusNameCount } from '../../models/taxon';
 })
 export class GraphTemperatureComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  db: GenusNameCount[] = []
+  db: Temperatures[] = []
   constructor(private dbService: DatabaseService) { }
 
   public temperatureOptions: ChartConfiguration['options'] = {
@@ -20,7 +21,12 @@ export class GraphTemperatureComponent {
     maintainAspectRatio: false,
     scales: {
       x: {
-        type: 'linear',
+        // https://stackoverflow.com/a/60222136
+        type: 'time',
+        time: {
+          unit: 'year',
+          tooltipFormat: 'Y'
+        },
         title: {
           display: true,
           text: "Year"
@@ -29,7 +35,7 @@ export class GraphTemperatureComponent {
       y: {
         title: {
           display: true,
-          text: "Temperature"
+          text: "Sea surface temperature anomaly (°C)"
         }
       }
     },
@@ -37,20 +43,19 @@ export class GraphTemperatureComponent {
       legend: {
         display: true,
       },
-      // datalabels: {
-      //   anchor: 'end',
-      //   align: 'end'
-      // }
+      datalabels: {
+        display: false
+      }
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
     }
   };
   public temperatureType: ChartType = 'line';
   public temperatureData: ChartData<'line'> = {
-    datasets: [{
-      data: [
-        {x: 0, y: 0},
-        {x: 1, y: 1}
-      ]
-    }]
+    datasets: []
   };
 
   public temperaturePlugins = [
@@ -69,6 +74,17 @@ export class GraphTemperatureComponent {
       // Convert the data to labels and values
       // this.barChartData.labels = this.db.map(species => species._id);
       // this.barChartData.datasets[0].data = this.db.map(species => species.count);
+      this.temperatureData.datasets = this.db.map(dataset => {
+        return {
+          data: dataset.temperatures.map(point => {
+            return {
+              x: (point.x - 1970) * 365.25*24*3600*1000,
+              y: point.y
+            };
+          }),
+          label: dataset._id
+        }
+      })
 
       // Get the number of genuses in the other category.
       // this.otherGenusCount = this.db.find(value => value.genusesContained)?.genusesContained ?? 0;

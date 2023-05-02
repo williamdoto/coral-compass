@@ -19,4 +19,11 @@ let temperatureSchema = new mongoose.Schema({
   }
 });
 
+export type Temperatures = {
+  _id: string;
+  temperatures: {
+    x: number,
+    y: number
+  }[]
+};
 export const Temperature = mongoose.model("Temperature", temperatureSchema, "Temperature");

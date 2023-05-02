@@ -11,17 +11,24 @@ export const getRegions = function (req: express.Request, res: express.Response)
 };
 
 export const getTemperatures = function (req: express.Request, res: express.Response) {
-    const aggOptions:PipelineStage.Group[] = [{
-        $group: {
-            "_id": "$Region",
-            temperatures: {
-                $push: "$Temperature Change"
-            },
-            years: {
-                "$push": "$Year"
+    const aggOptions: PipelineStage[] = [
+        {
+            $sort: {
+                "Year": 1
+            }
+        },
+        {
+            $group: { // TODO: Sort
+                "_id": "$Region",
+                temperatures: {
+                    $push: {
+                        "x": "$Year",
+                        "y": "$Temperature Change"
+                    }
+                }
             }
         }
-    }];
+    ];
     Temperature.aggregate(aggOptions)
         .catch(reason => res.json(`Failed for reason '${reason}'`))
         .then(result => res.json(result));
