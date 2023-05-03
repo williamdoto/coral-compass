@@ -19,6 +19,7 @@ import { GraphSpeciesBarComponent } from './graph-species-bar/graph-species-bar.
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './import/import.component';
+import { GraphTemperatureComponent } from './graph-temperature/graph-temperature.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ImportComponent } from './import/import.component';
     GraphPageComponent,
     GraphPieChartComponent,
     GraphSpeciesBarComponent,
-    ImportComponent
+    ImportComponent,
+    GraphTemperatureComponent
   ],
   imports: [
     BrowserModule,

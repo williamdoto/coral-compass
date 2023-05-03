@@ -48,5 +48,9 @@ export class DatabaseService {
       }
     );
   }
+
+  getTemperatures() {
+    return this.http.get(urls.temperatures.temperatures);
+  }
   
 }

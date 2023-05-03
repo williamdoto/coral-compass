@@ -9,7 +9,7 @@
     "client": "ng serve --proxy-config server.conf.json --host 0.0.0.0 --disable-host-check",
     "start": "npm-run-all -p client server",
     "test": "ng test",
-    "production": "node dist/out-tsc/server/server.js"
+    "production": "NODE_ENV=production node dist/out-tsc/server/server.js"
   },
   "private": true,
   "dependencies": {
@@ -30,7 +30,9 @@
     "body-parser": "^1.20.2",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.1",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "date-fns": "^2.30.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
