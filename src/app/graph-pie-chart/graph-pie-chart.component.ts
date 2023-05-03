@@ -3,7 +3,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
-import { GenusNameCount } from '../../models/taxon';
+import { GenusSpeciesNameCount } from '../../models/taxon';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
@@ -15,7 +15,7 @@ import { GenusNameCount } from '../../models/taxon';
 export class GraphPieChartComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  db: GenusNameCount[] = []
+  db: GenusSpeciesNameCount[] = []
   constructor(private dbService: DatabaseService) { }
 
   // Pie

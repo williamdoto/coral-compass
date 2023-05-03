@@ -9,6 +9,7 @@ export const urls = {
     },
     general: "/api/general",
     genusCounts: "/api/genus-counts",
+    speciesCounts: "/api/species-counts",
     taxon:"/api/taxon/:name",
     temperatures: {
         regions: "/api/temperatures/regions",

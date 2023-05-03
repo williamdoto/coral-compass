@@ -1,7 +1,7 @@
-<h1>Bar chart of the top {{dataLimit}} genuses</h1>
+<h1>Top {{dataLimit}} species of the {{genus}} genuses</h1>
 <div class="chart-container">
     <canvas baseChart class="chart" [data]="barChartData" [type]="barChartType" [options]="barChartOptions"
         [plugins]="barChartPlugins">
     </canvas>
 </div>
-<p>Whilst {{mostPopular}} is the most common genus, there is significant diversity of corals. The "other" category contains {{otherGenusCount}} genuses!</p>
+<p>Whilst {{mostPopular}} is the most common species, there is significant diversity of corals. The "other" category contains {{otherSpeciesCount}} species!</p>

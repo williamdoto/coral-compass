@@ -8,11 +8,11 @@ import { GenusSpeciesNameCount } from '../../models/taxon';
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
 @Component({
-  selector: 'app-graph-species-bar',
-  templateUrl: './graph-species-bar.component.html',
-  styleUrls: ['./graph-species-bar.component.css']
+  selector: 'app-graph-genus-bar',
+  templateUrl: './graph-genus-bar.component.html',
+  styleUrls: ['./graph-genus-bar.component.css']
 })
-export class GraphSpeciesBarComponent {
+export class GraphGenusBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   db: GenusSpeciesNameCount[] = []
@@ -65,13 +65,12 @@ export class GraphSpeciesBarComponent {
     console.log(event, active);
   }
 
-  public genus: string = "Acropora";
   public dataLimit: number = 20;
-  public otherSpeciesCount: number = 0;
+  public otherGenusCount: number = 0;
   public mostPopular: string = "";
 
   /**
- * Requests data on the number of samples of each species from the server and displays it on the pie chart.
+ * Requests data on the number of samples of each genus from the server and displays it on the pie chart.
  */
   loadData(): void {
     this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
@@ -80,11 +79,11 @@ export class GraphSpeciesBarComponent {
       console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
-      this.barChartData.labels = this.db.map(species => species._id);
-      this.barChartData.datasets[0].data = this.db.map(species => species.count);
+      this.barChartData.labels = this.db.map(genus => genus._id);
+      this.barChartData.datasets[0].data = this.db.map(genus => genus.count);
 
       // Get the number of genuses in the other category.
-      this.otherSpeciesCount = this.db.find(value => value.otherContains)?.otherContains ?? 0;
+      this.otherGenusCount = this.db.find(value => value.otherContains)?.otherContains ?? 0;
 
       // Add the most popular genus
       this.mostPopular = this.db[0]._id;

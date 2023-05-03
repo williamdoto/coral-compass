@@ -72,8 +72,6 @@ export class GraphTemperatureComponent {
       console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
-      // this.barChartData.labels = this.db.map(species => species._id);
-      // this.barChartData.datasets[0].data = this.db.map(species => species.count);
       this.temperatureData.datasets = this.db.map(dataset => {
         return {
           data: dataset.temperatures.map(point => {
@@ -85,12 +83,6 @@ export class GraphTemperatureComponent {
           label: dataset._id
         }
       })
-
-      // Get the number of genuses in the other category.
-      // this.otherGenusCount = this.db.find(value => value.genusesContained)?.genusesContained ?? 0;
-
-      // Add the most popular genus
-      // this.mostPopular = this.db[0]._id;
 
       this.chart?.update();
     });
