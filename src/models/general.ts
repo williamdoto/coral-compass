@@ -2,36 +2,88 @@ import mongoose from "mongoose";
 
 let generalSchema = new mongoose.Schema({
   _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    auto: true,
+    type: String,
   },
   "dcterms:modified": {
     type: String,
-    required: true,
-  },  
-  institution: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Institution',
   },
-  record: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Record',
+  institutionCode: {
+    type: String,
   },
-  occurence: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Occurence',
+  collectionCode: {
+    type: String,
   },
-  catalog: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Catalog',
+  basisOfRecord: {
+    type: String,
   },
-  location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Location',
+  occurrenceID: {
+    type: String,
   },
-  taxon: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Taxon',
+  catalogNumber: {
+    type: String,
+  },
+  occurrenceStatus: {
+    type: String,
+  },
+  preparations: {
+    type: String,
+  },
+  otherCatalogNumbers: {
+    type: String,
+  },
+  associatedOccurrences: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  stateProvince: {
+    type: String,
+  },
+  decimalLatitude: {
+    type: String,
+  },
+  decimalLongitude: {
+    type: String,
+  },
+  geodeticDatum: {
+    type: String,
+  },
+  taxonID: {
+    type: String,
+  },
+  taxonConceptID: {
+    type: String,
+  },
+  scientificName: {
+    type: String,
+  },
+  kingdom: {
+    type: String,
+  },
+  phylum: {
+    type: String,
+  },
+  class: {
+    type: String,
+  },
+  order: {
+    type: String,
+  },
+  family: {
+    type: String,
+  },
+  genus: {
+    type: String,
+  },
+  specificEpithet: {
+    type: String,
+  },
+  taxonRank: {
+    type: String,
+  },
+  scientificNameAuthorship: {
+    type: String,
   },
 });
 

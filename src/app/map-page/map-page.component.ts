@@ -36,16 +36,22 @@ export class MapPageComponent implements OnInit, AfterViewInit {
         this.db = data;
         const coordinatesMap = new Map<string, { count: number, scientificName: string, taxonId: number, decimalLatitude: string, decimalLongitude: string }>();
 
+
         this.db.forEach(item => {
           const key = `${parseFloat(item.decimalLongitude)},${parseFloat(item.decimalLatitude)}`;
           const entry = coordinatesMap.get(key);
-  
+          
           if (entry) {
             entry.count += 1;
           } else {
             coordinatesMap.set(key, { count: 1, scientificName: item.scientificName, taxonId: item.taxonID, decimalLatitude: item.decimalLatitude, decimalLongitude: item.decimalLongitude });
           }
+          if(item.scientificName == "Coral Poop"){
+            console.log(item)
+          }
+          
         });
+
 
       const geojson: FeatureCollection<Point> = {
         type: 'FeatureCollection',

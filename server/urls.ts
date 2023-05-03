@@ -9,7 +9,13 @@ export const urls = {
     },
     general: "/api/general",
     genusCounts: "/api/genus-counts",
-    taxon:"/api/taxon/:name",
+    taxon: {name: "/api/taxon/:name", 
+            insert: "/api/taxon"},
+    catalog: "/api/catalog",
+    institution: "/api/institution",
+    location: "/api/location",
+    occurence: "/api/occurence",
+    record: "/api/record",
     temperatures: {
         regions: "/api/temperatures/regions",
         temperatures: "/api/temperatures/temperatures"

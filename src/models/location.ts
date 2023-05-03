@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 let locationSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    auto: true,
   },
   country: {
     type: String,

@@ -34,6 +34,28 @@ export class DatabaseService {
     return this.http.get(urls.general);
   }
 
+  importGeneral(data: any) {
+    return this.http.post(urls.general, data, httpOptions);
+  }
+  importCatalog(data: any) {
+    return this.http.post(urls.catalog, data, httpOptions);
+  }
+  importLocation(data: any) {
+    return this.http.post(urls.location, data, httpOptions);
+  }
+  importOccurence(data: any) {
+    return this.http.post(urls.occurence, data, httpOptions);
+  }
+  importRecord(data: any) {
+    return this.http.post(urls.record, data, httpOptions);
+  }
+  importTaxon(data: any) {
+    return this.http.post(urls.taxon.insert, data, httpOptions);
+  }
+  importInstitution(data: any) {
+    return this.http.post(urls.institution, data, httpOptions);
+  }
+
   getTaxon(name:string) {
     return this.http.get("/api/taxon/" + name);
   }

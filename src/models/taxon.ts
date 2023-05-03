@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 let taxonSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    auto: true,
   },
   family: {
     type: String,

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 let catalogSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    auto: true,
   },
   catalogNumber: {
     type: String,

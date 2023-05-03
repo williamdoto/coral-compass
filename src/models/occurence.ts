@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 let occurrenceSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    auto: true,
   },
   occurrenceID: {
     type: String,
