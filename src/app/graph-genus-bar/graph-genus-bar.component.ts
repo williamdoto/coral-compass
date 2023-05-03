@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
@@ -14,6 +14,10 @@ import { GenusSpeciesNameCount } from '../../models/taxon';
 })
 export class GraphGenusBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  // Events to ask for a change of genus and colour
+  // Based on https://stackoverflow.com/a/54245245
+  @Output() genusChangeEvent = new EventEmitter<string>();
 
   db: GenusSpeciesNameCount[] = []
   constructor(private dbService: DatabaseService) { }
@@ -56,13 +60,16 @@ export class GraphGenusBarComponent {
     DatalabelsPlugin
   ];
 
-  // events
-  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
-    console.log(event, active);
+  /**
+   * Event that handles a bar being clicked to change the genus displayed on the filter graph.
+   */
+  public chartClicked({ event, active }: { event?: ChartEvent, active?: { index?: number }[] }): void {
+    // console.log(event, active);
+    if (active && active.length > 0 && active[0].index !== undefined && this.barChartData.labels) {
+      const genus: string = <string>this.barChartData.labels[active[0].index];
+      console.log(`Emitting event to change to genus '${genus}'`);
+      this.genusChangeEvent.emit(genus);
+    }
   }
 
   public dataLimit: number = 20;

@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
 import { GenusSpeciesNameCount } from '../../models/taxon';
+import { Subject } from 'rxjs';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
@@ -14,6 +15,7 @@ import { GenusSpeciesNameCount } from '../../models/taxon';
 })
 export class GraphSpeciesBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @Input() genusSubject: Subject<string> = new Subject();
 
   db: GenusSpeciesNameCount[] = []
   constructor(private dbService: DatabaseService) { }
@@ -73,8 +75,9 @@ export class GraphSpeciesBarComponent {
   /**
  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
  */
-  loadData(): void {
-    this.dbService.getSpeciesNames(this.dataLimit, this.genus).subscribe((data: any) => {
+  loadData(genus:string): void {
+    console.log("Requesting data for genus ", genus);
+    this.dbService.getSpeciesNames(this.dataLimit, genus).subscribe((data: any) => {
       // Have got the data
       this.db = data;
       console.log(data); // TODO: Remove
@@ -90,10 +93,12 @@ export class GraphSpeciesBarComponent {
       this.mostPopular = this.db[0]._id;
 
       this.chart?.update();
+      this.genus = genus;
     });
   }
 
   ngAfterViewInit() {
-    this.loadData();
+    this.loadData(this.genus);
+    this.genusSubject.subscribe(genus => this.loadData(genus)); // Can't just use this.loadData as the function due to issues with the `this` pointer.
   }
 }
