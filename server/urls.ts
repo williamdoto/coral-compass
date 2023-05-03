@@ -21,3 +21,12 @@ export const urls = {
         temperatures: "/api/temperatures/temperatures"
     }
 };
+
+export const pages = {
+    login: "login",
+    map: "map",
+    about: "about",
+    signup: "signup", 
+    graph: "graph",
+    import: "import"
+};

@@ -11,7 +11,7 @@ import * as institution from "../src/routers/institution";
 import * as occurence from "../src/routers/occurence";
 import * as record from "../src/routers/record";
 import * as temperature from "../src/routers/temperature";
-import { urls } from "./urls";
+import { urls, pages } from "./urls";
 import config from "./config.json";
 import path from "path";
 
@@ -25,11 +25,14 @@ if (process.env['NODE_ENV'] === "production") {
     const angularPath = path.join(__dirname, "../../coral-reef-monitor");
     app.use("/", express.static(angularPath));
 
-    // Redirect pages to index.html as angular is a single page application.
-    // Based on https://stackoverflow.com/a/42922998
-    app.all('/*', function (req, res) {
-        // Send the index.html for other files to support HTML5Mode
-        res.sendFile('index.html', { root: angularPath });
+    // Get a list of angular routes
+    Object.values(pages).map(route => {
+        // Redirect pages to index.html as angular is a single page application.
+        // Initially based on https://stackoverflow.com/a/42922998
+        app.all("/" + route, function (req, res) {
+            // Send the index.html for other files to support HTML5Mode
+            res.sendFile('index.html', { root: angularPath });
+        });
     });
 } else {
     console.log("Running in development mode. Will NOT route requests to the angular files.");
