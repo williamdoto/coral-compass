@@ -57,7 +57,7 @@ app.get(urls.account.find, account.findAccount);
 app.get(urls.general, general.findLocation);
 app.get(urls.taxon, taxon.findSpecies);
 app.get(urls.genusCounts, taxon.countPositive, taxon.countGenus);
-app.get(urls.speciesCounts, taxon.countPositive, taxon.countSpecies);
+app.get(urls.speciesCounts, taxon.validateSpeciesRequest, taxon.countSpecies);
 app.get(urls.temperatures.regions, temperature.getRegions);
 app.get(urls.temperatures.temperatures, temperature.getTemperatures);
 

@@ -74,7 +74,7 @@ export class GraphSpeciesBarComponent {
  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
  */
   loadData(): void {
-    this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
+    this.dbService.getSpeciesNames(this.dataLimit, this.genus).subscribe((data: any) => {
       // Have got the data
       this.db = data;
       console.log(data); // TODO: Remove
