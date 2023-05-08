@@ -3,7 +3,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
-import { GenusSpeciesNameCount, GenusColourPair } from '../../models/taxon';
+import { TaxonCountMany, GenusColourPair } from '../../models/taxon';
 import { GraphColourSchemeService } from '../graph-colour-scheme.service';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
@@ -21,7 +21,11 @@ export class GraphGenusBarComponent {
   // Based on https://stackoverflow.com/a/54245245
   @Output() genusChangeEvent = new EventEmitter<GenusColourPair>();
 
-  db: GenusSpeciesNameCount[] = []
+  db: TaxonCountMany = {
+    taxons: [],
+    otherCount: 0,
+    otherTaxonCount: 0
+  };
   colourScheme: string[];
 
 
@@ -89,6 +93,7 @@ export class GraphGenusBarComponent {
 
   public dataLimit: number = 20;
   public otherGenusCount: number = 0;
+  public otherCount: number = 0;
   public mostPopular: string = "";
 
   /**
@@ -101,14 +106,15 @@ export class GraphGenusBarComponent {
       console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
-      this.barChartData.labels = this.db.map(genus => genus._id);
-      this.barChartData.datasets[0].data = this.db.map(genus => genus.count);
+      this.barChartData.labels = this.db.taxons.map(genus => genus._id);
+      this.barChartData.datasets[0].data = this.db.taxons.map(genus => genus.count);
 
       // Get the number of genuses in the other category.
-      this.otherGenusCount = this.db.find(value => value.otherContains)?.otherContains ?? 0;
+      this.otherGenusCount = this.db.otherTaxonCount;
+      this.otherCount = this.db.otherCount;
 
       // Add the most popular genus
-      this.mostPopular = this.db[0]._id;
+      this.mostPopular = this.db.taxons[0]._id;
 
       this.chart?.update();
     });
