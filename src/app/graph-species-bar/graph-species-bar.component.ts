@@ -3,22 +3,27 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
-import { GenusSpeciesNameCount } from '../../models/taxon';
-import { Subject } from 'rxjs';
+import { GenusSpeciesNameCount, GenusColourPair } from '../../models/taxon';
+import { Subject, distinctUntilChanged } from 'rxjs';
+import { GraphColourSchemeService } from '../graph-colour-scheme.service';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
 @Component({
   selector: 'app-graph-species-bar',
   templateUrl: './graph-species-bar.component.html',
-  styleUrls: ['./graph-species-bar.component.css']
+  styleUrls: ['./graph-species-bar.component.css'],
+  providers: [GraphColourSchemeService]
 })
 export class GraphSpeciesBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  @Input() genusSubject: Subject<string> = new Subject();
+  @Input() genusSubject: Subject<GenusColourPair> = new Subject();
 
   db: GenusSpeciesNameCount[] = []
-  constructor(private dbService: DatabaseService) { }
+  colourScheme: string[];
+  constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) {
+    this.colourScheme = csService.colourScheme;
+  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -75,9 +80,9 @@ export class GraphSpeciesBarComponent {
   /**
  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
  */
-  loadData(genus:string): void {
-    console.log("Requesting data for genus ", genus);
-    this.dbService.getSpeciesNames(this.dataLimit, genus).subscribe((data: any) => {
+  loadData(genusColour: GenusColourPair): void {
+    console.log("Requesting data for genus ", genusColour.genus);
+    this.dbService.getSpeciesNames(this.dataLimit, genusColour.genus).subscribe((data: any) => {
       // Have got the data
       this.db = data;
       console.log(data); // TODO: Remove
@@ -85,6 +90,8 @@ export class GraphSpeciesBarComponent {
       // Convert the data to labels and values
       this.barChartData.labels = this.db.map(species => species._id);
       this.barChartData.datasets[0].data = this.db.map(species => species.count);
+      this.barChartData.datasets[0].backgroundColor = genusColour.colour;
+      this.barChartData.datasets[0].borderColor = genusColour.colour;
 
       // Get the number of genuses in the other category.
       this.otherSpeciesCount = this.db.find(value => value.otherContains)?.otherContains ?? 0;
@@ -93,12 +100,18 @@ export class GraphSpeciesBarComponent {
       this.mostPopular = this.db[0]._id;
 
       this.chart?.update();
-      this.genus = genus;
+      this.genus = genusColour.genus;
     });
   }
 
   ngAfterViewInit() {
-    this.loadData(this.genus);
-    this.genusSubject.subscribe(genus => this.loadData(genus)); // Can't just use this.loadData as the function due to issues with the `this` pointer.
+    this.loadData({
+      genus: this.genus,
+      colour: this.colourScheme[0]
+    });
+    this.genusSubject.pipe(
+      // If already showing the data, don't request again.
+      distinctUntilChanged((prev, cur) => prev.genus === cur.genus)
+    ).subscribe(genus => this.loadData(genus)); // Can't just use this.loadData as the function due to issues with the `this` pointer.
   }
 }

@@ -1,7 +1,7 @@
 <h1>Bar chart of the top {{dataLimit}} genuses</h1>
 <div class="chart-container">
     <canvas baseChart class="chart" [data]="barChartData" [type]="barChartType" [options]="barChartOptions"
-        [plugins]="barChartPlugins" (chartClick)="chartClicked($event)">
+        [plugins]="barChartPlugins" (chartClick)="chartClicked($event)" (chartHover)="chartClicked($event)">
     </canvas>
 </div>
 <p>Whilst {{mostPopular}} is the most common genus, there is significant diversity of corals. The "other" category contains {{otherGenusCount}} genuses!</p>

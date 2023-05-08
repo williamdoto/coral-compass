@@ -61,4 +61,9 @@ export type GenusSpeciesNameCount = {
   otherContains?: number;
 };
 
+export type GenusColourPair = {
+  genus: string;
+  colour: string;
+};
+
 export const Taxon = mongoose.model("Taxon", taxonSchema, "Taxon");

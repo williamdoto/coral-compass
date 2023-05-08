@@ -3,24 +3,33 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { DatabaseService } from '../database.service';
-import { GenusSpeciesNameCount } from '../../models/taxon';
+import { GenusSpeciesNameCount, GenusColourPair } from '../../models/taxon';
+import { GraphColourSchemeService } from '../graph-colour-scheme.service';
 
 // Based off https://valor-software.com/ng2-charts/#PieChart
 
 @Component({
   selector: 'app-graph-genus-bar',
   templateUrl: './graph-genus-bar.component.html',
-  styleUrls: ['./graph-genus-bar.component.css']
+  styleUrls: ['./graph-genus-bar.component.css'],
+  providers: [GraphColourSchemeService]
 })
 export class GraphGenusBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   // Events to ask for a change of genus and colour
   // Based on https://stackoverflow.com/a/54245245
-  @Output() genusChangeEvent = new EventEmitter<string>();
+  @Output() genusChangeEvent = new EventEmitter<GenusColourPair>();
 
   db: GenusSpeciesNameCount[] = []
-  constructor(private dbService: DatabaseService) { }
+  colourScheme: string[];
+
+
+  constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) { 
+    this.colourScheme = csService.colourScheme;
+    this.barChartData.datasets[0].backgroundColor = this.colourScheme;
+    this.barChartData.datasets[0].borderColor = this.colourScheme;
+  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -52,8 +61,10 @@ export class GraphGenusBarComponent {
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [{
-      data: []
-    }]
+      data: [],
+      backgroundColor: [],
+      borderColor: []
+    }],
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [
@@ -67,8 +78,12 @@ export class GraphGenusBarComponent {
     // console.log(event, active);
     if (active && active.length > 0 && active[0].index !== undefined && this.barChartData.labels) {
       const genus: string = <string>this.barChartData.labels[active[0].index];
+      const colour: string = this.colourScheme[active[0].index];
       console.log(`Emitting event to change to genus '${genus}'`);
-      this.genusChangeEvent.emit(genus);
+      this.genusChangeEvent.emit({
+        genus: genus,
+        colour: colour
+      });
     }
   }
 
