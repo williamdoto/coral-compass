@@ -1,5 +1,10 @@
 .chart-container {
     max-width: 100%;
     width: 750px;
+    height: 300px;
     margin: 0 auto;
+}
+
+h1 {
+    padding-top: 30px;
 }

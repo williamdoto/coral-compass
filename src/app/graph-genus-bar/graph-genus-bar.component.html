@@ -1,0 +1,8 @@
+<h1>Bar chart of the top {{dataLimit}} genuses</h1>
+<p>Click or hover over a bar to see more information about a genus.</p>
+<div class="chart-container">
+    <canvas baseChart class="chart" [data]="barChartData" [type]="barChartType" [options]="barChartOptions"
+        [plugins]="barChartPlugins" (chartClick)="chartClicked($event)" (chartHover)="chartClicked($event)">
+    </canvas>
+</div>
+<p>Whilst {{mostPopular}} is the most common genus, there is significant diversity of corals. The other {{otherGenusCount}} genuses have a total of {{otherCount}} samples recorded!</p>

@@ -7,8 +7,9 @@
 </head>
 
 <body style="text-align: center;" class="jumbotron text">
-  <app-graph-pie-chart></app-graph-pie-chart>
-  <app-graph-species-bar></app-graph-species-bar>
+  <!-- <app-graph-pie-chart></app-graph-pie-chart> -->
+  <app-graph-genus-bar (genusChangeEvent)="changeGenus($event)"></app-graph-genus-bar>
+  <app-graph-species-bar [genusSubject]="genusSubject"></app-graph-species-bar>
   <app-graph-temperature></app-graph-temperature>
 </body>
 
