@@ -4,7 +4,12 @@
         <title>Map</title>
         <link rel="stylesheet" href="./map-page.component.css">
     </head>
-<div class="container">
+
+    <div *ngIf="isLoading" class="loading-screen">
+      <div class="spinner"></div>
+    </div>
+
+<div class="container"*ngIf="!isLoading">
     <div class="row mt-2">
       <div class="col">
         <input
@@ -16,5 +21,6 @@
       </div>
     </div>
   </div>
+  
   <div class="map" id="map" class="match-parent"></div>
   </html>

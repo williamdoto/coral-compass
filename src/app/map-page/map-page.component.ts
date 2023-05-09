@@ -15,6 +15,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
   db: any[] = [];
   dictionary: any[] = [];
   queryDB: any[] = [];
+  isLoading = true;
 
   constructor(private dbService: DatabaseService) { }
 
@@ -26,8 +27,8 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       accessToken: environment.mapbox.accessToken,
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-73.9772, 40.7666],
-      zoom: 12
+      center: [149.012375, -35.473469],
+      zoom: 5
     });
     this.map.addControl(new mapboxgl.NavigationControl());
 
@@ -35,9 +36,10 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       this.dbService.getGeneral().subscribe((data: any) => {
         this.db = data;
         const coordinatesMap = new Map<string, { count: number, scientificName: string, taxonId: number, decimalLatitude: string, decimalLongitude: string }>();
-
+        console.log(data)
 
         this.db.forEach(item => {
+   
           const key = `${parseFloat(item.decimalLongitude)},${parseFloat(item.decimalLatitude)}`;
           const entry = coordinatesMap.get(key);
           
@@ -46,9 +48,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
           } else {
             coordinatesMap.set(key, { count: 1, scientificName: item.scientificName, taxonId: item.taxonID, decimalLatitude: item.decimalLatitude, decimalLongitude: item.decimalLongitude });
           }
-          if(item.scientificName == "Coral Poop"){
-            console.log(item)
-          }
+
           
         });
 
@@ -127,6 +127,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
             'circle-stroke-color': '#fff'
           }
         });
+        this.isLoading = false;
       });
       
     });
