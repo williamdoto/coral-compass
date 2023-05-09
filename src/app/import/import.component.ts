@@ -23,14 +23,14 @@ export class ImportComponent {
    }
 
   onSubmit() {
-    this.dbService.isLoggedin().subscribe(data => {
-      console.log(data)
-      this.isLoggedin = data;
-    })
+    // this.dbService.isLoggedin().subscribe(data => {
+    //   console.log(data)
+    //   this.isLoggedin = data;
+    // })
 
-    console.log("data:")
-    console.log(this.isLoggedin)
-    console.log('Form submitted', this.message);
+    // console.log("data:")
+    // console.log(this.isLoggedin)
+
     
     if (this.message[0] == '[' && this.message[this.message.length - 1] == ']'){
       try {
@@ -57,6 +57,7 @@ export class ImportComponent {
           this.dbService.importGeneral(data).subscribe(result => {
               console.log(result)
               this.status = 'Successful submission the database!'
+              console.log('Form submitted', this.message);
           });
       }
     }
