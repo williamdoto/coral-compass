@@ -30,5 +30,6 @@ export const pages = {
     about: "about",
     signup: "signup", 
     graph: "graph",
-    import: "import"
+    import: "import",
+    reference: "reference"
 };

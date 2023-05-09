@@ -1,35 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { trigger, state, style, transition, animate} from '@angular/animations'
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-
+  styleUrls: ['./dashboard.component.css'],
+  animations: [
+    trigger('fadeInOut' , [
+      state('void', style({opacity: 0})),
+      transition('void <=> *', animate(1000)),
+    ])
+  ]
 })
-export class DashboardComponent implements OnInit{
-  imageUrls = ["https://cdn.pixabay.com/photo/2016/03/27/17/12/water-1283152_960_720.jpg","https://cdn.pixabay.com/photo/2023/03/28/02/53/lagoon-7882110_960_720.jpg"]
-  imageUrl = this.imageUrls[0]
-  currentIndex = 0
 
-  changeImage(){
-    if (this.currentIndex > this.imageUrls.length)    this.currentIndex = 0
-    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length
-    this.imageUrl = this  .imageUrls[this.currentIndex];
-  }
-  
-  nextImage(){
-    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length
-    this.imageUrl = this.imageUrls[this.currentIndex];
-  }
+export class DashboardComponent{
+  ImageOne = "assets/images/pexels-egor-kamelev-920160.jpg"
+  ImageTwo = "assets/images/pexels-keemkai-villadums-2435728.jpg"
 
+  currentImage = this.ImageOne
   prevImage(){
-    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length
-    this.imageUrl = this.imageUrls[this.currentIndex];
-  }
+    this.currentImage = this.currentImage === this.ImageOne ? this.ImageTwo: this.ImageOne
 
-  ngOnInit() {
+  }
+  nextImage(){
+    this.currentImage = this.currentImage === this.ImageOne ? this.ImageTwo: this.ImageOne
+  }
+  ngOnInit(){
     setInterval(() => {
-      this.changeImage();
-    }, 6000)
+      this.currentImage = this.currentImage === this.ImageOne ? this.ImageTwo : this.ImageOne;
+    }, 4000)
   }
 }

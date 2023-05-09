@@ -3,6 +3,19 @@
     height: 100%;
   }
 
+.container {
+    width:100vw;
+    max-width: 100%;
+    padding: 0;
+}
+
+.row {
+    position: fixed;
+    margin-left: 5%;
+    z-index: 100;
+    width:90%;
+}
+
 .loading-screen {
     position: fixed;
     top: 0;
