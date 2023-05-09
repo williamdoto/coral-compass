@@ -60,6 +60,7 @@ app.post(urls.account.create, account.loginValidate, account.createAccount);
 app.post(urls.account.login, account.loginValidate, account.login);
 app.get(urls.account.find, account.findAccount);
 app.get(urls.general, general.findLocation);
+app.get(urls.isLogged, account.isLoggedIn);
 app.get(urls.taxon.name, taxon.findSpecies);
 app.get(urls.genusCounts, taxon.countPositive, taxon.countGenus);
 app.get(urls.speciesCounts, taxon.validateSpeciesRequest, taxon.countSpecies);

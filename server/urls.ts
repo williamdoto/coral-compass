@@ -8,6 +8,7 @@ export const urls = {
         find: "/api/account"
     },
     general: "/api/general",
+    isLogged: "/api/islogged",
     genusCounts: "/api/genus-counts",
     taxon: {name: "/api/taxon/:name", 
             insert: "/api/taxon"},

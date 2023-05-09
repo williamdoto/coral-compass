@@ -25,6 +25,10 @@ export class DatabaseService {
     return this.http.post(urls.account.login, body, formHttpOptions);
   }
 
+  isLoggedin(){
+    return this.http.get(urls.isLogged)
+  }
+
   getAccount(email: string) {
     let url = urls.account.find + email;
     return this.http.get(url);
