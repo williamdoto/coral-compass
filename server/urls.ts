@@ -16,6 +16,7 @@ export const urls = {
     location: "/api/location",
     occurence: "/api/occurence",
     record: "/api/record",
+    speciesCounts: "/api/species-counts",
     temperatures: {
         regions: "/api/temperatures/regions",
         temperatures: "/api/temperatures/temperatures"

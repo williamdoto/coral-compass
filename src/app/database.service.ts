@@ -71,6 +71,18 @@ export class DatabaseService {
     );
   }
 
+  getSpeciesNames(limit:number, genus:string) {
+    return this.http.get(
+      urls.speciesCounts,
+      {
+        params: {
+          limit: limit,
+          genus: genus
+        }
+      }
+    );
+  }
+
   getTemperatures() {
     return this.http.get(urls.temperatures.temperatures);
   }

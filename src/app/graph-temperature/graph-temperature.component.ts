@@ -5,16 +5,21 @@ import { BaseChartDirective } from 'ng2-charts';
 import 'chartjs-adapter-date-fns';
 import { DatabaseService } from '../database.service';
 import { Temperatures } from '../../models/temperature';
+import { GraphColourSchemeService } from '../graph-colour-scheme.service';
 
 @Component({
   selector: 'app-graph-temperature',
   templateUrl: './graph-temperature.component.html',
-  styleUrls: ['./graph-temperature.component.css']
+  styleUrls: ['./graph-temperature.component.css'],
+  providers: [GraphColourSchemeService]
 })
 export class GraphTemperatureComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   db: Temperatures[] = []
-  constructor(private dbService: DatabaseService) { }
+  colourScheme: string[];
+  constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) {
+    this.colourScheme = csService.colourScheme;
+  }
 
   public temperatureOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -72,9 +77,7 @@ export class GraphTemperatureComponent {
       console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
-      // this.barChartData.labels = this.db.map(species => species._id);
-      // this.barChartData.datasets[0].data = this.db.map(species => species.count);
-      this.temperatureData.datasets = this.db.map(dataset => {
+      this.temperatureData.datasets = this.db.map((dataset, index) => {
         return {
           data: dataset.temperatures.map(point => {
             return {
@@ -82,15 +85,11 @@ export class GraphTemperatureComponent {
               y: point.y
             };
           }),
-          label: dataset._id
+          label: dataset._id,
+          backgroundColor: this.colourScheme[2*index+1], // Slightly darker
+          borderColor: this.colourScheme[2*index]
         }
       })
-
-      // Get the number of genuses in the other category.
-      // this.otherGenusCount = this.db.find(value => value.genusesContained)?.genusesContained ?? 0;
-
-      // Add the most popular genus
-      // this.mostPopular = this.db[0]._id;
 
       this.chart?.update();
     });
