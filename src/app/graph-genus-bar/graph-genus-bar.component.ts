@@ -29,7 +29,7 @@ export class GraphGenusBarComponent {
   colourScheme: string[];
 
 
-  constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) { 
+  constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) {
     this.colourScheme = csService.colourScheme;
     this.barChartData.datasets[0].backgroundColor = this.colourScheme;
     this.barChartData.datasets[0].borderColor = this.colourScheme;
@@ -59,6 +59,9 @@ export class GraphGenusBarComponent {
       datalabels: {
         anchor: 'end',
         align: 'end'
+      },
+      tooltip: {
+        enabled: false
       }
     },
   };
@@ -75,14 +78,28 @@ export class GraphGenusBarComponent {
     DatalabelsPlugin
   ];
 
+  prevSelected: number = 0;
+
   /**
    * Event that handles a bar being clicked to change the genus displayed on the filter graph.
    */
   public chartClicked({ event, active }: { event?: ChartEvent, active?: { index?: number }[] }): void {
-    // console.log(event, active);
-    if (active && active.length > 0 && active[0].index !== undefined && this.barChartData.labels) {
-      const genus: string = <string>this.barChartData.labels[active[0].index];
-      const colour: string = this.colourScheme[active[0].index];
+    /**
+     * Calculates the current index that the cursor is hovering over.
+     */
+    const positionToIndex = (xPos: number) => {
+      const left = this.chart?.chart?.chartArea.left ?? 0;
+      const right = this.chart?.chart?.chartArea.right ?? 0;
+      const fraction = (xPos - left) / (right - left);
+      return Math.floor(fraction * this.barChartData.datasets[0].data.length);
+    };
+
+    // Work out whether to emit this event
+    const hoverIndex: number = positionToIndex(event?.x ?? 0);
+    if (hoverIndex != this.prevSelected && this.barChartData.labels) {
+      this.prevSelected = hoverIndex;
+      const genus: string = <string>this.barChartData.labels[hoverIndex];
+      const colour: string = this.colourScheme[hoverIndex];
       console.log(`Emitting event to change to genus '${genus}'`);
       this.genusChangeEvent.emit({
         genus: genus,
@@ -97,8 +114,8 @@ export class GraphGenusBarComponent {
   public mostPopular: string = "";
 
   /**
- * Requests data on the number of samples of each genus from the server and displays it on the pie chart.
- */
+  * Requests data on the number of samples of each genus from the server and displays it on the pie chart.
+  */
   loadData(): void {
     this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
       // Have got the data

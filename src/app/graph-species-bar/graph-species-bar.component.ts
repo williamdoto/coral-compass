@@ -53,6 +53,9 @@ export class GraphSpeciesBarComponent {
       datalabels: {
         anchor: 'end',
         align: 'end'
+      },
+      tooltip: {
+        enabled: false
       }
     },
   };

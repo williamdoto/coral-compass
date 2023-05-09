@@ -50,6 +50,13 @@ export class GraphTemperatureComponent {
       },
       datalabels: {
         display: false
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.formattedValue}°C`
+        }
       }
     },
     elements: {
