@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate} from '@angular/animations'
 
 @Component({
@@ -25,5 +25,9 @@ export class DashboardComponent{
   nextImage(){
     this.currentImage = this.currentImage === this.ImageOne ? this.ImageTwo: this.ImageOne
   }
-
+  ngOnInit(){
+    setInterval(() => {
+      this.currentImage = this.currentImage === this.ImageOne ? this.ImageTwo : this.ImageOne;
+    }, 4000)
+  }
 }
