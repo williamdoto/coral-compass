@@ -6,13 +6,14 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Import Coral Reef Data</h2>
+        <h3>Import Coral Reef Data</h3>
         <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="mb-3">
                 <label for="message" class="form-label">Enter Data in JSON Format</label>
                 <textarea class="form-control" id="message" name="message" [(ngModel)]="message" rows="3" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="#" id = "dashboard" class="btn btn-primary" routerLink="/">Back</a>
         </form>
     </div>
 </body>

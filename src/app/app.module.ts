@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './import/import.component';
 import { GraphTemperatureComponent } from './graph-temperature/graph-temperature.component';
 import { GraphGenusBarComponent } from './graph-genus-bar/graph-genus-bar.component';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { ReferenceComponent } from './reference/reference.component';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { GraphGenusBarComponent } from './graph-genus-bar/graph-genus-bar.compon
     GraphPageComponent,
     GraphSpeciesBarComponent,
     ImportComponent,
+    ReferenceComponent,
     GraphTemperatureComponent,
     GraphGenusBarComponent
   ],
@@ -42,6 +45,7 @@ import { GraphGenusBarComponent } from './graph-genus-bar/graph-genus-bar.compon
     AppRoutingModule,
     CommonModule,
     FormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgChartsModule,
