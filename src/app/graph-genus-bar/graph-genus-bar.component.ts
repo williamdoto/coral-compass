@@ -42,7 +42,7 @@ export class GraphGenusBarComponent {
       x: {
         title: {
           display: true,
-          text: "Scientific name"
+          text: "Genus"
         }
       },
       y: {
