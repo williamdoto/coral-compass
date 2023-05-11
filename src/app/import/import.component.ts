@@ -30,7 +30,7 @@ export class ImportComponent {
 
     // console.log("data:")
     // console.log(this.isLoggedin)
-
+    this.message = this.message.trimStart().trimEnd()
     
     if (this.message[0] == '[' && this.message[this.message.length - 1] == ']'){
       try {
