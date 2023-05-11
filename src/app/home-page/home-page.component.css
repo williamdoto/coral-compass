@@ -3,24 +3,7 @@ body {
 }
 
 @media (max-width: 991.98px) {
-  .nav-link-vertical {
-    margin-left: 30px; /* Adjust this value according to your preference */
+    .nav-link-vertical {
+      margin-left: 20px; /* Adjust this value according to your preference */
+    }
   }
-}
-
-.navbar-brand {
-  transition: all 0.3s;
-}
-
-.navbar-brand:hover {
-  transform: scale(1.05); /* Reduced the scale value */
-}
-
-.nav-item a {
-  transition: all 0.3s;
-}
-
-.nav-item a:hover {
-  color: #fff;
-  transform: scale(1.05); /* Reduced the scale value */
-}
