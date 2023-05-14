@@ -99,14 +99,20 @@ export const login = function (req: express.Request, res: express.Response) {
 
     const accountEmail = req.body.email;
     const givenPassword = req.body.password;
-    console.log(`Email: ${accountEmail}`);
-    console.log(`Password: ${givenPassword}`);
+    // console.log(`Email: ${accountEmail}`);
+    // console.log(`Password: ${givenPassword}`);
     Account.findOne({ 'email': accountEmail }).exec()
         .then(function (result) {
             if (result) {
                 bcrypt.compare(givenPassword, result.password, async function (err, same) {
                     if (same) {
                         setLogin(req, AccountType.User);
+                        // (req.session as any).user = {
+                        //     id: req.body.email,
+                        //     username: req.body.email
+                        //     // Store any other user data you need
+                        //   };
+
                         res.json("Success"); // TODO: Do something with this success
                     } else {
                         failResponse();
@@ -115,6 +121,5 @@ export const login = function (req: express.Request, res: express.Response) {
             } else {
                 failResponse();
             }
-        })
-        .catch(reason => res.json(`Failed for reason '${reason}'`))
+        }).catch(reason => res.json(`Failed for reason '${reason}'`))
 };

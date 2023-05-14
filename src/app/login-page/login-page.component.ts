@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../database.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service'; 
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,7 +10,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  constructor(private dbService: DatabaseService) { }
+  constructor(private dbService: DatabaseService, private router: Router, private authService: AuthService) { }
 
   /**
    * Sends a post request to login.
@@ -18,6 +20,11 @@ export class LoginPageComponent {
   login(loginForm: any): void {
     console.log(loginForm.value);
     this.dbService.login(loginForm.value.username, loginForm.value.password).subscribe((data: any) => {
+      if (data == "Success"){
+        this.authService.login();
+        console.log(this.authService.isLoggedIn())
+        this.router.navigate([''])
+      }
       alert(data);
     });
   }

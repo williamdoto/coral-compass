@@ -9,6 +9,7 @@ import { GraphPageComponent } from './graph-page/graph-page.component';
 import { ImportComponent } from './import/import.component';
 import { ReferenceComponent } from './reference/reference.component';
 import { pages } from '../../server/urls';
+import { AuthGuardService } from './auth-guard.service';
 
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
     { path: pages.about, component: AboutComponent },
     { path: pages.signup, component: SignupComponent },
     { path: pages.graph, component: GraphPageComponent },
-    { path: pages.import, component: ImportComponent },
+    { path: pages.import, component: ImportComponent, canActivate: [AuthGuardService] },
     { path: pages.reference, component:ReferenceComponent},
     { path: "", component: DashboardComponent },
 ];

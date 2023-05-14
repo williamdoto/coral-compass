@@ -42,7 +42,8 @@ if (process.env['NODE_ENV'] === "production") {
 const sesh: session.SessionOptions = {
     secret: config.sessionSecret,
     cookie: {
-        maxAge: 3600000 * 24 // 1 day
+        maxAge: 3600000 * 24, // 1 day,
+        secure: true
     },
     resave: false,
     saveUninitialized: false

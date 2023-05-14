@@ -22,6 +22,7 @@ import { GraphTemperatureComponent } from './graph-temperature/graph-temperature
 import { GraphGenusBarComponent } from './graph-genus-bar/graph-genus-bar.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ReferenceComponent } from './reference/reference.component';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ReferenceComponent } from './reference/reference.component';
     ImportComponent,
     ReferenceComponent,
     GraphTemperatureComponent,
-    GraphGenusBarComponent
+    GraphGenusBarComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

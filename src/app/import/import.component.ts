@@ -22,11 +22,17 @@ export class ImportComponent {
   constructor(private dbService: DatabaseService, private router: Router) {
    }
 
+  ngOnInit() {
+    this.dbService.isLoggedin().subscribe(data => {
+      console.log(data)
+      this.isLoggedin = data;
+    })
+    console.log(this.isLoggedin)
+  }
+
+
   onSubmit() {
-    // this.dbService.isLoggedin().subscribe(data => {
-    //   console.log(data)
-    //   this.isLoggedin = data;
-    // })
+
 
     // console.log("data:")
     // console.log(this.isLoggedin)
