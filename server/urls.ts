@@ -32,6 +32,7 @@ export const urls = {
 
 export const pages = {
     login: "login",
+    logout: "logout",
     map: "map",
     about: "about",
     signup: "signup",

@@ -40,4 +40,6 @@ export class HomePageComponent {
       this.showLoginBtn = true;
     }
   }
+
+  
 }

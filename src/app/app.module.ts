@@ -23,6 +23,7 @@ import { GraphGenusBarComponent } from './graph-genus-bar/graph-genus-bar.compon
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ReferenceComponent } from './reference/reference.component';
 import { AccountComponent } from './account/account.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { AccountComponent } from './account/account.component';
     ReferenceComponent,
     GraphTemperatureComponent,
     GraphGenusBarComponent,
-    AccountComponent
+    AccountComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

@@ -10,10 +10,13 @@ import { ImportComponent } from './import/import.component';
 import { ReferenceComponent } from './reference/reference.component';
 import { pages } from '../../server/urls';
 import { AuthGuardService } from './auth-guard.service';
+import { LogoutComponent } from './logout/logout.component';
 
 
 export const routes: Routes = [
     { path: pages.login, component: LoginPageComponent },
+    { path: pages.logout, component: LogoutComponent, canActivate: [AuthGuardService] },
+    { path: pages.about, component: AboutComponent },
     { path: pages.map, component: MapPageComponent },
     { path: pages.about, component: AboutComponent },
     { path: pages.signup, component: SignupComponent },
