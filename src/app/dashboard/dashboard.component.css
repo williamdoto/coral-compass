@@ -37,10 +37,13 @@ body {
 }
 
 .container .carousel .carousel-item {
-    opacity: 0;
     width: 100%;
     max-height: 50vh;
     object-fit: cover;
+}
+
+.container .carousel .caroursel-item img{
+    transition: all 0.2s ease-in-out;
 }
 
 .container .carousel .carousel-caption{
@@ -57,10 +60,6 @@ body {
     backdrop-filter: blur(2px);
     background-color: rgba(0,0,0,0.5);
     cursor: pointer
-}
-
-.container .carousel .carousel-item.active{
-    opacity: 1;
 }
 
 .row {
