@@ -6,11 +6,12 @@
   <link rel="stylesheet" href="./graph-page.component.css">
 </head>
 
-<body style="text-align: center;" class="jumbotron text">
-  <!-- <app-graph-pie-chart></app-graph-pie-chart> -->
-  <app-graph-genus-bar (genusChangeEvent)="changeGenus($event)"></app-graph-genus-bar>
-  <app-graph-species-bar [genusSubject]="genusSubject"></app-graph-species-bar>
-  <app-graph-temperature></app-graph-temperature>
+<body>
+  <div class="jumbotron text center-column-div">
+    <app-graph-genus-bar (genusChangeEvent)="changeGenus($event)"></app-graph-genus-bar>
+    <app-graph-species-bar [genusSubject]="genusSubject"></app-graph-species-bar>
+    <app-graph-temperature></app-graph-temperature>
+  </div>
 </body>
 
 </html>
