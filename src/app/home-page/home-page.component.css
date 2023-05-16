@@ -20,6 +20,10 @@ body {
   transition: all 0.3s;
 }
 
+.nav-item .dropdown-menu{
+  background-color: #3FA3D1;
+}
+
 .nav-item a:hover {
   color: #fff;
   transform: scale(1.05); /* Reduced the scale value */
