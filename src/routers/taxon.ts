@@ -2,7 +2,7 @@ import express from "express";
 import { TaxonCount, Taxon, TaxonCountMany } from "../models/taxon";
 
 import { check, validationResult } from "express-validator";
-import { PipelineStage } from "mongoose";
+import { AccountType, loginGuard } from "./account";
 
 export const findSpecies = function (req: express.Request, res: express.Response) {
     Taxon.find({ 'scientificName': req.params["name"] }).exec()
@@ -60,10 +60,14 @@ export function countGenus(req: express.Request, res: express.Response) {
 };
 
 export const insertTaxon = function (req: express.Request, res: express.Response) {
-    let data = req.body
-    let taxon = new Taxon({_id: data["_id"], family: data["family"], genus: data["genus"], kingdom: data["kingdom"], order: data["order"], phylum: data["phylum"], specificEpithet: data["specificEpithet"], taxonConceptID: data["taxonConceptID"], 
-    taxonID: data["taxonID"], taxonRank: data["taxonRank"], class: data["class"], scientificName: data["scientificName"], scientificNameAuthorship: data["scientificNameAuthorship"]})
-    taxon.save().catch(reason => res.json(`Failed for reason '${reason}'`)).then(result => res.json(result));
+    if (loginGuard(req, res, AccountType.User)) {
+        let data = req.body
+        let taxon = new Taxon({
+            _id: data["_id"], family: data["family"], genus: data["genus"], kingdom: data["kingdom"], order: data["order"], phylum: data["phylum"], specificEpithet: data["specificEpithet"], taxonConceptID: data["taxonConceptID"],
+            taxonID: data["taxonID"], taxonRank: data["taxonRank"], class: data["class"], scientificName: data["scientificName"], scientificNameAuthorship: data["scientificNameAuthorship"]
+        })
+        taxon.save().catch(reason => res.json(`Failed for reason '${reason}'`)).then(result => res.json(result));
+    }
 }
 
 function getLimit(req: express.Request): number {

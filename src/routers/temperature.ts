@@ -18,7 +18,7 @@ export const getTemperatures = function (req: express.Request, res: express.Resp
             }
         },
         {
-            $group: { // TODO: Sort
+            $group: {
                 "_id": "$Region",
                 temperatures: {
                     $push: {

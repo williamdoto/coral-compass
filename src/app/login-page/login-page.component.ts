@@ -12,6 +12,8 @@ import {Router} from '@angular/router';
 export class LoginPageComponent {
   constructor(private dbService: DatabaseService, private router: Router, private authService: AuthService) { }
 
+  incorrectMsg:boolean = false; // Whether to hide or show the incorrect message.
+
   /**
    * Sends a post request to login.
    * 
@@ -21,11 +23,13 @@ export class LoginPageComponent {
     console.log(loginForm.value);
     this.dbService.login(loginForm.value.username, loginForm.value.password).subscribe((data: any) => {
       if (data == "Success"){
+        this.incorrectMsg = false;
         this.authService.login();
         console.log(this.authService.isLoggedIn())
         this.router.navigate([''])
+      } else {
+        this.incorrectMsg = true;
       }
-      alert(data);
     });
   }
 }

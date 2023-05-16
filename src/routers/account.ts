@@ -15,9 +15,10 @@ export const loginValidate = [
     //     .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter')];
 ];
 
-enum AccountType {
-    NotLoggedIn,
-    User // TODO: Add more roles
+// The order of these indicates increasing levels of access.
+export enum AccountType {
+    NotLoggedIn = 0,
+    User = 1 // TODO: Add more roles
 }
 
 // Based off https://github.com/expressjs/session/issues/799#issuecomment-968082380
@@ -35,11 +36,29 @@ export function isLoggedIn(req: { session: SessionData }): AccountType {
 }
 
 /**
+ * Checks if the user is logged in to the required access level. If not,
+ * responds access denied and returns false. Otherwise returns true.
+ * @param req The request to operate on.
+ */
+export function loginGuard(req: {  session: SessionData }, res: express.Response, level:AccountType): boolean {
+    if (isLoggedIn(req) < level) {
+        // Not logged in / don't have access to this area.
+        res.status(403).send("Permission denied for this operation.");
+        console.log("Not logged in");
+        return false;
+    } else {
+        console.log("Logged in");
+        return true;
+    }
+}
+
+/**
  * Sets the user account to a particular state.
  * @param req The request to operate on.
  * @param status The status of the account to set.
  */
 function setLogin(req: { session: SessionData }, status:AccountType): void {
+    console.log("Setting user to account type " + status);
     req.session.role = status;
 }
 
