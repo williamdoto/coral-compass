@@ -13,13 +13,16 @@ import { MapMouseEvent } from 'mapbox-gl';
 export class MapPageComponent implements OnInit, AfterViewInit {
   map!: mapboxgl.Map;
   db: any[] = [];
-  dictionary: any[] = [];
-  queryDB: any[] = [];
+  nameOptions: string[] = [];
   isLoading = true;
 
   constructor(private dbService: DatabaseService) { }
 
   ngOnInit(): void {
+    // Get the species and add them to the list of things to type
+    this.dbService.getSpecies().subscribe((data: any) => {
+      this.nameOptions = data;
+    });
   }
 
   ngAfterViewInit() {

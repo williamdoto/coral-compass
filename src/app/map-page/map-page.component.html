@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Map</title>
-        <link rel="stylesheet" href="./map-page.component.css">
-    </head>
 
-    <div *ngIf="isLoading" class="loading-screen">
-      <div class="spinner"></div>
-    </div>
+<head>
+  <title>Map</title>
+  <link rel="stylesheet" href="./map-page.component.css">
+</head>
 
-<div class="container"*ngIf="!isLoading">
-    <div class="row mt-2">
-      <div class="col">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by Scientific Name"
-          (input)="searchByScientificName($event.target)"
-        />
-      </div>
+<div *ngIf="isLoading" class="loading-screen">
+  <div class="spinner"></div>
+</div>
+
+<div class="container" *ngIf="!isLoading">
+  <div class="row mt-2">
+    <div class="col">
+      <input class="form-control" type="text" list="speciesList" placeholder="Search by Scientific Name"
+        (input)="searchByScientificName($event.target)">
+      <datalist id="speciesList">
+        <option *ngFor="let name of nameOptions" value="{{name}}"></option>
+      </datalist>
     </div>
   </div>
-  
-  <div class="map" id="map" class="match-parent"></div>
-  </html>
+</div>
+
+<div class="map" id="map" class="match-parent"></div>
+
+</html>

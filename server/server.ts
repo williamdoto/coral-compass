@@ -57,21 +57,33 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Various routes that the server will handle. These should all start with '/api/' for the development 
+// Accounts
 app.post(urls.account.create, account.loginValidate, account.createAccount);
 app.post(urls.account.login, account.loginValidate, account.login);
 app.get(urls.account.find, account.findAccount);
-app.get(urls.general, general.findLocation);
-app.get(urls.isLogged, account.isLoggedIn);
+app.get(urls.account.isLogged, account.isLoggedIn);
+
+// General
+app.get(urls.general.list, general.findLocation);
+app.post(urls.general.import, general.importData);
+
+// Taxonomy
 app.get(urls.taxon.name, taxon.findSpecies);
-app.get(urls.genusCounts, taxon.countPositive, taxon.countGenus);
-app.get(urls.speciesCounts, taxon.validateSpeciesRequest, taxon.countSpecies);
-app.get(urls.temperatures.regions, temperature.getRegions);
-app.get(urls.temperatures.temperatures, temperature.getTemperatures);
-app.post(urls.general, general.importData);
+app.get(urls.taxon.genusCounts, taxon.countPositive, taxon.countGenus);
+app.get(urls.taxon.speciesCounts, taxon.validateSpeciesRequest, taxon.countSpecies);
+app.get(urls.taxon.species, taxon.uniqueSpecies);
+app.post(urls.taxon.insert, taxon.insertTaxon);
+
+// Other database options
 app.post(urls.institution, institution.insertInstitution);
 app.post(urls.catalog, catalog.insertCatalog);
 app.post(urls.location, location.insertLocation);
 app.post(urls.occurence, occurence.insertOccurence);
 app.post(urls.record, record.insertRecord);
-app.post(urls.taxon.insert, taxon.insertTaxon);
+
+// Temperature
+app.get(urls.temperatures.regions, temperature.getRegions);
+app.get(urls.temperatures.temperatures, temperature.getTemperatures);
+
+// Start the server
 app.listen(config.port, () => console.log(`⚡Server is running here 👉 http://localhost:${config.port}`));

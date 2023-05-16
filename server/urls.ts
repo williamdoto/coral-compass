@@ -5,19 +5,25 @@ export const urls = {
     account: {
         create: "/api/create-account",
         login: "/api/login",
-        find: "/api/account"
+        find: "/api/account",
+        isLogged: "/api/islogged"
     },
-    general: "/api/general",
-    isLogged: "/api/islogged",
-    genusCounts: "/api/genus-counts",
-    taxon: {name: "/api/taxon/:name", 
-            insert: "/api/taxon"},
+    general: {
+        list: "/api/general",
+        import: "/api/general/import"
+    },
+    taxon: {
+        genusCounts: "/api/genus-counts",
+        name: "/api/taxon/:name",
+        insert: "/api/taxon",
+        species: "/api/species-names",
+        speciesCounts: "/api/species-counts"
+    },
     catalog: "/api/catalog",
     institution: "/api/institution",
     location: "/api/location",
     occurence: "/api/occurence",
     record: "/api/record",
-    speciesCounts: "/api/species-counts",
     temperatures: {
         regions: "/api/temperatures/regions",
         temperatures: "/api/temperatures/temperatures"
@@ -28,7 +34,7 @@ export const pages = {
     login: "login",
     map: "map",
     about: "about",
-    signup: "signup", 
+    signup: "signup",
     graph: "graph",
     import: "import",
     reference: "reference"

@@ -26,7 +26,7 @@ export class DatabaseService {
   }
 
   isLoggedin(){
-    return this.http.get(urls.isLogged)
+    return this.http.get(urls.account.isLogged)
   }
 
   getAccount(email: string) {
@@ -35,11 +35,15 @@ export class DatabaseService {
   }
 
   getGeneral() {
-    return this.http.get(urls.general);
+    return this.http.get(urls.general.list);
+  }
+
+  getSpecies() {
+    return this.http.get(urls.taxon.species);
   }
 
   importGeneral(data: any) {
-    return this.http.post(urls.general, data, httpOptions);
+    return this.http.post(urls.general.import, data, httpOptions);
   }
   importCatalog(data: any) {
     return this.http.post(urls.catalog, data, httpOptions);
@@ -66,7 +70,7 @@ export class DatabaseService {
 
   getGenusNames(limit:number) {
     return this.http.get(
-      urls.genusCounts,
+      urls.taxon.genusCounts,
       {
         params: {
           limit: limit
@@ -77,7 +81,7 @@ export class DatabaseService {
 
   getSpeciesNames(limit:number, genus:string) {
     return this.http.get(
-      urls.speciesCounts,
+      urls.taxon.speciesCounts,
       {
         params: {
           limit: limit,
