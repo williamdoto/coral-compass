@@ -1,7 +1,7 @@
 import express from "express";
 import { TaxonCount, Taxon, TaxonCountMany } from "../models/taxon";
 
-import { check, validationResult } from "express-validator";
+import { ValidationChain, check, validationResult } from "express-validator";
 import { AccountType, loginGuard } from "./account";
 
 /**
@@ -22,14 +22,13 @@ export const uniqueSpecies = function (req: express.Request, res: express.Respon
         .then(result => res.json(result));
 };
 
-export const countPositive = [
-    check('limit', 'The limit must be an integer > 0').isInt({ min: 1 }).toInt()
-];
-
-export const validateSpeciesRequest = [
-    check('limit', 'The limit must be an integer > 0').isInt({ min: 1 }).toInt(),
-    check('genus', 'The genus must be a string').isString()
-];
+/**
+ * Array of checks for user input validation.
+ */
+const limitGt0: ValidationChain = check('limit', 'The limit must be an integer > 0').isInt({ min: 1 }).toInt();
+const genusIncluded: ValidationChain = check('genus', 'The genus must be a string').isString();
+export const countPositive = [limitGt0];
+export const validateSpeciesRequest = [limitGt0, genusIncluded];
 
 /**
  * Handles a request to count the number of each species present.

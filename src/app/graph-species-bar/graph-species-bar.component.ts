@@ -29,6 +29,9 @@ export class GraphSpeciesBarComponent {
     this.colourScheme = csService.colourScheme;
   }
 
+  /**
+   * Options for displaying the species bar chart.
+   */
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
@@ -85,15 +88,14 @@ export class GraphSpeciesBarComponent {
   public mostPopular: string = "";
 
   /**
- * Requests data on the number of samples of each species from the server and displays it on the pie chart.
- */
+  * Requests data on the number of samples of each species from the server and displays it on the pie chart.
+  */
   loadData(genusColour: GenusColourPair): void {
     console.log("Requesting data for genus ", genusColour.genus);
     const IDEAL_DATA_LIMIT = 20;
     this.dbService.getSpeciesNames(IDEAL_DATA_LIMIT, genusColour.genus).subscribe((data: any) => {
       // Have got the data
       this.db = data;
-      console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
       this.barChartData.labels = this.db.taxons.map(species => species._id);
@@ -120,14 +122,21 @@ export class GraphSpeciesBarComponent {
     });
   }
 
+  /**
+   * Requests the initial default data and subscribes to changes send from the
+   * parent component.
+   */
   ngAfterViewInit() {
+    // Initial default data
     this.loadData({
       genus: this.genus,
       colour: this.colourScheme[0]
     });
+
+    // Subscribing to requesting changes of species.
     this.genusSubject.pipe(
       // If already showing the data, don't request again.
       distinctUntilChanged((prev, cur) => prev.genus === cur.genus)
-    ).subscribe(genus => this.loadData(genus)); // Can't just use this.loadData as the function due to issues with the `this` pointer.
+    ).subscribe(genus => this.loadData(genus)); // Can't eta reduce due to issues with the `this` pointer.
   }
 }

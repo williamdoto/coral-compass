@@ -15,10 +15,14 @@ export const loginValidate = [
     //     .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter')];
 ];
 
-// The order of these indicates increasing levels of access.
+/**
+ * An enumerator that specifies access levels.
+ * A higher access level has permissions to access everything of the levels
+ * below it.
+ */
 export enum AccountType {
     NotLoggedIn = 0,
-    User = 1 // TODO: Add more roles
+    User = 1
 }
 
 // Based off https://github.com/expressjs/session/issues/799#issuecomment-968082380
@@ -62,6 +66,9 @@ function setLogin(req: { session: SessionData }, status:AccountType): void {
     req.session.role = status;
 }
 
+/**
+ * Handles requests to create an account.
+ */
 export const createAccount = async function (req: express.Request, res: express.Response) {
     // Check for errors (based off https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/).
     const errors = validationResult(req);
@@ -96,16 +103,17 @@ export const createAccount = async function (req: express.Request, res: express.
     });
 };
 
+/**
+ * Handles requests to check whether the user is currently logged in.
+ * Mainly useful for debugging purposes.
+ */
 export const findAccount = function (req: express.Request, res: express.Response) {
-    console.log(`Logged in: ${isLoggedIn(req)}`);
-    // const accountEmail = req.body.email;
-    // console.log(`Email: ${accountEmail}`);
-    // Account.find({ 'email': accountEmail }).exec()
-    //     .catch(reason => res.json(`Failed for reason '${reason}'`))
-    //     .then(result => res.json(result));
     res.send(`Logged in: ${isLoggedIn(req)}`);
 };
 
+/**
+ * Handles requests for the user to log in.
+ */
 export const login = function (req: express.Request, res: express.Response) {
     /**
      * Function that sends a failure response. This is used to keep unkown
@@ -115,30 +123,29 @@ export const login = function (req: express.Request, res: express.Response) {
         console.log(`Incorrect email or password`);
         res.json(`Incorrect email or password`);
     }
-
+    
+    // Extract the given email and passwords and attempt to find them in the database.
     const accountEmail = req.body.email;
     const givenPassword = req.body.password;
-    // console.log(`Email: ${accountEmail}`);
-    // console.log(`Password: ${givenPassword}`);
     Account.findOne({ 'email': accountEmail }).exec()
         .then(function (result) {
             if (result) {
+                // Found a user with the same email in the database. Check that
+                // the password given could have been used to generate the hash
+                // in the database.
                 bcrypt.compare(givenPassword, result.password, async function (err, same) {
                     if (same) {
+                        // Logged in successfully.
                         setLogin(req, AccountType.User);
-                        // (req.session as any).user = {
-                        //     id: req.body.email,
-                        //     username: req.body.email
-                        //     // Store any other user data you need
-                        //   };
-
-                        res.json("Success"); // TODO: Do something with this success
+                        res.json("Success");
                     } else {
+                        // Incorrect password.
                         failResponse();
                     }
                 });
             } else {
+                // No user found with the same email.
                 failResponse();
             }
-        }).catch(reason => res.json(`Failed for reason '${reason}'`))
+        }).catch(reason => res.status(500).json(`Failed for reason '${reason}'`))
 };

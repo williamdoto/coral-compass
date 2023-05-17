@@ -2,11 +2,6 @@ import { Component } from '@angular/core';
 import { DatabaseService } from '../database.service';
 var mongoose = require('mongoose');
 
-enum AccountType {
-  NotLoggedIn,
-  User // TODO: Add more roles
-}
-
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
@@ -31,10 +26,6 @@ export class ImportComponent {
 
 
   onSubmit() {
-
-
-    // console.log("data:")
-    // console.log(this.isLoggedin)
     this.message = this.message.trimStart().trimEnd()
 
     if (this.message[0] == '[' && this.message[this.message.length - 1] == ']') {

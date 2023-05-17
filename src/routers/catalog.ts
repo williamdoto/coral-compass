@@ -3,6 +3,9 @@ import { loginGuard, AccountType } from "./account";
 
 import { Catalog } from "../models/catalog";
 
+/**
+ * Handles requests to insert into the catlogue.
+ */
 export const insertCatalog = function (req: express.Request, res: express.Response) {
     if (loginGuard(req, res, AccountType.User)) {
         let data = req.body

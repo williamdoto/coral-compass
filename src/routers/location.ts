@@ -3,6 +3,9 @@ import { AccountType, loginGuard } from "./account";
 
 import { Location } from "../models/location";
 
+/**
+ * Handles requests to insert locations.
+ */
 export const insertLocation = function (req: express.Request, res: express.Response) {
     if (loginGuard(req, res, AccountType.User)) {
         let data = req.body

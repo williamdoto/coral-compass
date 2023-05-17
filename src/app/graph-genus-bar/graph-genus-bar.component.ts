@@ -28,13 +28,20 @@ export class GraphGenusBarComponent {
   };
   colourScheme: string[];
 
-
+  /**
+   * Uses the given services and imports the colour scheme.
+   */
   constructor(private dbService: DatabaseService, csService: GraphColourSchemeService) {
+    // Passing an array of colours into a single dataset sets chartjs to use a
+    // different colour for each point.
     this.colourScheme = csService.colourScheme;
     this.barChartData.datasets[0].backgroundColor = this.colourScheme;
     this.barChartData.datasets[0].borderColor = this.colourScheme;
   }
 
+  /**
+   * Options and settings for the bar chart.
+   */
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
@@ -65,6 +72,10 @@ export class GraphGenusBarComponent {
       }
     },
   };
+
+  /**
+   * Where the data is going to go.
+   */
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [{
@@ -75,10 +86,10 @@ export class GraphGenusBarComponent {
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [
-    DatalabelsPlugin
+    DatalabelsPlugin // Show the numbers on each bar.
   ];
 
-  prevSelected: number = 0;
+  prevSelected: number = 0; // What bar index the mouse was hovering over last.
 
   /**
    * Event that handles a bar being clicked to change the genus displayed on the filter graph.
@@ -108,7 +119,7 @@ export class GraphGenusBarComponent {
     }
   }
 
-  public dataLimit: number = 20;
+  public dataLimit: number = 20; // The number of genuses to request.
   public otherGenusCount: number = 0;
   public otherCount: number = 0;
   public mostPopular: string = "";
@@ -120,7 +131,6 @@ export class GraphGenusBarComponent {
     this.dbService.getGenusNames(this.dataLimit).subscribe((data: any) => {
       // Have got the data
       this.db = data;
-      console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
       this.barChartData.labels = this.db.taxons.map(genus => genus._id);
@@ -137,6 +147,9 @@ export class GraphGenusBarComponent {
     });
   }
 
+  /**
+   * Loads the data on page load.
+   */
   ngAfterViewInit() {
     this.loadData();
   }

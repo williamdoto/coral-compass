@@ -3,6 +3,9 @@ import { AccountType, loginGuard } from "./account";
 
 import { Institution } from "../models/institution";
 
+/**
+ * Handles requests to insert new institutions.
+ */
 export const insertInstitution = function (req: express.Request, res: express.Response) {
     if (loginGuard(req, res, AccountType.User)) {
         let data = req.body

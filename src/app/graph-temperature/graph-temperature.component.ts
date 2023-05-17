@@ -21,6 +21,9 @@ export class GraphTemperatureComponent {
     this.colourScheme = csService.colourScheme;
   }
 
+  /**
+   * Options and settings for the temperature graph.
+   */
   public temperatureOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
@@ -75,33 +78,38 @@ export class GraphTemperatureComponent {
   ];
 
   /**
- * Requests data on the number of samples of each species from the server and displays it on the pie chart.
- */
+  * Requests data on the temperature and displays it.
+  */
   loadData(): void {
     this.dbService.getTemperatures().subscribe((data: any) => {
       // Have got the data
       this.db = data;
-      console.log(data); // TODO: Remove
 
       // Convert the data to labels and values
       this.temperatureData.datasets = this.db.map((dataset, index) => {
+        // For each region, create the series on the graph.
         return {
+          // Create the array of points in the format {x: unix timestamp in ms, y: temperature}
           data: dataset.temperatures.map(point => {
             return {
-              x: (point.x - 1970) * 365.25*24*3600*1000,
+              x: (point.x - 1970) * 365.25*24*3600*1000, // Convert years to unix time in ms.
               y: point.y
             };
           }),
           label: dataset._id,
-          backgroundColor: this.colourScheme[2*index+1], // Slightly darker
+          backgroundColor: this.colourScheme[2*index+1], // Slightly darker than the
           borderColor: this.colourScheme[2*index]
         }
       })
 
+      // Draw the changes on the screen.
       this.chart?.update();
     });
   }
 
+  /**
+   * Loads the data on page load.
+   */
   ngAfterViewInit() {
     this.loadData();
   }

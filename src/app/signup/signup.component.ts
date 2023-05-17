@@ -39,9 +39,7 @@ export class SignupComponent {
       password: this.password
     });
     
-
-    let obj = {username: this.username, email: this.email, password: this.password};
-    this.dbService.createAccount(obj).subscribe(result => {
+    this.dbService.createAccount(this.username, this.email, this.password).subscribe(result => {
       this.router.navigate(["/accountSuccessful"]);
     });
 }

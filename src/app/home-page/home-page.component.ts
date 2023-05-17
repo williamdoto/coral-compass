@@ -30,12 +30,10 @@ export class HomePageComponent {
   setLoggedIn(state: boolean) {
     if (state) {
       // Logged in.
-      console.log("Logged in");
       this.showImportBtn = true;
       this.showLoginBtn = false;
     } else {
       // Not logged in.
-      console.log("Not logged in");
       this.showImportBtn = false;
       this.showLoginBtn = true;
     }

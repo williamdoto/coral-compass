@@ -8,7 +8,11 @@ export class GraphColourSchemeService {
   constructor() { }
 
    /**
-    * Python matplotlib tab20 theme
+    * List of colours to be used by the charts.
+    * 
+    * 
+    * This is the python matplotlib tab20 theme. See
+    * https://matplotlib.org/3.5.0/tutorials/colors/colormaps.html
     * >>> cm = plt.get_cmap("tab20").colors
     * >>> a = [f"#{round(r*255):>02x}{round(g*255):>02x}{round(b*255):>02x}" for r, g, b in cm]
     * >>> print(a)

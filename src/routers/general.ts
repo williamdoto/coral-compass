@@ -1,23 +1,21 @@
 import express from "express";
 
 import { General } from "../models/general";
-import { Institution } from "../models/institution";
-import { Record } from "../models/record";
-import { Occurence } from "../models/occurence";
-import { Catalog } from "../models/catalog";
-import { Location } from "../models/location";
-import { Taxon } from "../models/taxon";
 
 import { AccountType, loginGuard } from "./account";
 
-
-
+/**
+ * Handles requests for all data in the general collection.
+ */
 export const findLocation = function (req: express.Request, res: express.Response) {
     General.find().exec()
         .catch(reason => res.json(`Failed for reason '${reason}'`))
         .then(result => res.json(result));
 };
 
+/**
+ * Handles requests to import data into the general collection.
+ */
 export const importData = function (req: express.Request, res: express.Response) {
     if (loginGuard(req, res, AccountType.User)) {
         let data = req.body
@@ -51,7 +49,9 @@ export const importData = function (req: express.Request, res: express.Response)
             taxonRank: data.taxonRank,
             scientificNameAuthorship: data.scientificNameAuthorship,
         });
-        
-        general.save().catch(reason => res.json(`Failed for reason '${reason}'`)).then(result => res.json(result));
+
+        general.save()
+            .catch(reason => res.status(500).json(`Failed for reason '${reason}'`))
+            .then(result => res.json(result));
     }
 };
