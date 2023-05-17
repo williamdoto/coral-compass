@@ -58,7 +58,7 @@ app.use(bodyParser.json());
 
 // Various routes that the server will handle. These should all start with '/api/' for the development 
 // Accounts
-app.post(urls.account.create, account.loginValidate, account.createAccount);
+app.post(urls.account.create, account.accountCreateValidate, account.createAccount);
 app.post(urls.account.login, account.loginValidate, account.login);
 app.get(urls.account.find, account.findAccount);
 app.get(urls.account.isLogged, account.isLoggedIn);

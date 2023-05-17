@@ -7,13 +7,15 @@ import { Account } from "../models/account";
 
 // Validate login details. Based off of
 // https://heynode.com/tutorial/how-validate-and-sanitize-expressjs-form/
-export const loginValidate = [
-    check('email', 'Username Must Be an Email Address').isEmail().trim().escape().normalizeEmail()
-    // check('password').isLength({ min: 8 })
-    //     .withMessage('Password Must Be at Least 8 Characters')
-    //     .matches('[0-9]').withMessage('Password Must Contain a Number')
-    //     .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter')];
-];
+const emailValidate = check('email', 'Email address must be in the format \'abc@deg.geg\'').isEmail().trim().escape().normalizeEmail();
+const passwordValidate = check('password').isLength({ min: 8 })
+    .withMessage('Password Must Be at Least 8 Characters')
+    .matches('[0-9]').withMessage('Password Must Contain a Number')
+    .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter');
+const usernameValidate = check('username', 'Username must be provided');
+
+export const loginValidate = [emailValidate, passwordValidate];
+export const accountCreateValidate = [emailValidate, passwordValidate, usernameValidate];
 
 /**
  * An enumerator that specifies access levels.
@@ -44,7 +46,7 @@ export function isLoggedIn(req: { session: SessionData }): AccountType {
  * responds access denied and returns false. Otherwise returns true.
  * @param req The request to operate on.
  */
-export function loginGuard(req: {  session: SessionData }, res: express.Response, level:AccountType): boolean {
+export function loginGuard(req: { session: SessionData }, res: express.Response, level: AccountType): boolean {
     if (isLoggedIn(req) < level) {
         // Not logged in / don't have access to this area.
         res.status(403).send("Permission denied for this operation.");
@@ -61,7 +63,7 @@ export function loginGuard(req: {  session: SessionData }, res: express.Response
  * @param req The request to operate on.
  * @param status The status of the account to set.
  */
-function setLogin(req: { session: SessionData }, status:AccountType): void {
+function setLogin(req: { session: SessionData }, status: AccountType): void {
     console.log("Setting user to account type " + status);
     req.session.role = status;
 }
@@ -81,24 +83,31 @@ export const createAccount = async function (req: express.Request, res: express.
         // The password has been hashed, store it in the database.
         let theAccount = new Account({ username: req.body.username, email: req.body.email, password: hash });
         try {
+            // Check if the account already exists.
+            // TODO: Transaction management.
             const docs = await Account.find({ 'email': theAccount.email });
             console.log(docs);
             if (docs.length === 0) {
+                // Couldn't find an existing account with that email.
                 try {
+                    // Attempt to save the new account.
                     await theAccount.save();
                     console.log('User saved successfully');
-                    res.send('User saved successfully');
+                    res.send('User saved successfully.');
                 } catch (error) {
+                    // Couldn't save it.
                     console.error('Error saving user:', error);
-                    res.send('Error saving user');
+                    res.status(500).send('Error saving user. Please try again.');
                 }
             } else {
+                // Account already exists.
                 console.log("Duplicate user found");
-                res.send("Duplicate user found");
+                res.status(422).send("A user with this email address already has an account. Please log in with that account or use a different email address.");
             }
         } catch (error) {
+            // Something went wrong.
             console.error('Error fetching account:', error);
-            res.send('Error fetching account:');
+            res.status(500).send('Error fetching account. Please try again.');
         }
     });
 };
@@ -123,7 +132,7 @@ export const login = function (req: express.Request, res: express.Response) {
         console.log(`Incorrect email or password`);
         res.json(`Incorrect email or password`);
     }
-    
+
     // Extract the given email and passwords and attempt to find them in the database.
     const accountEmail = req.body.email;
     const givenPassword = req.body.password;
