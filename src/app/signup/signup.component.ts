@@ -22,13 +22,13 @@ export class SignupComponent {
       alert("Passwords do not match!");
       return;
     }
-    this.dbService.getAccount(this.email).subscribe((data:any) => {
+    this.dbService.getAccount(this.email).subscribe((data: any) => {
       this.db = data;
     })
     console.log(this.db)
 
     if (this.db.length != 0) {
-      console.log("Email's already entered")
+      alert("This email address already exists");
       return
     }
 
@@ -38,9 +38,10 @@ export class SignupComponent {
       email: this.email,
       password: this.password
     });
-    
+
+    // Create the account
     this.dbService.createAccount(this.username, this.email, this.password).subscribe(result => {
       this.router.navigate(["/accountSuccessful"]);
     });
-}
+  }
 }
