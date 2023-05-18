@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,11 +27,12 @@
       text-align: center;
     }
 
-    #cancel{
+    #cancel {
       margin-left: 70%;
     }
   </style>
 </head>
+
 <body>
   <div class="container signup-container">
     <div class="row justify-content-center">
@@ -51,14 +53,19 @@
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+                <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password"
+                  required>
               </div>
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+                <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword"
+                  name="confirmPassword" required>
               </div>
-              <button type="submit" id = "submit" class="btn btn-primary" (click)="signUp()">Sign Up</button>
-              <a href="#" id = "cancel" class="btn btn-primary" routerLink="/login">Cancel</a>
+              <div class="mb-3" *ngIf="errorMsgs.length > 0">
+                <p class="red" *ngFor="let msg of errorMsgs">{{msg}}</p>
+              </div>
+              <button type="submit" id="submit" class="btn btn-primary" (click)="signUp()">Sign Up</button>
+              <a href="#" id="cancel" class="btn btn-primary" routerLink="/login">Cancel</a>
             </form>
           </div>
         </div>
@@ -66,4 +73,5 @@
     </div>
   </div>
 </body>
+
 </html>
