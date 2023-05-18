@@ -10,5 +10,5 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 ExecStart=bash linux/run.sh
-WorkingDirectory=/home/fit3162/coral-reef-monitor
-User=fit3162
+WorkingDirectory=<CORAL_COMPASS_DIR>
+User=<CORAL_COMPASS_USER>

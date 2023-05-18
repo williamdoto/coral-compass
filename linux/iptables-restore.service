@@ -8,6 +8,6 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=iptables-restore /home/fit3162/coral-reef-monitor/linux/iptables.saved
+ExecStart=iptables-restore <CORAL_COMPASS_DIR>/linux/iptables.saved
 WorkingDirectory=/
 User=root
