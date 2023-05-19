@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GraphGenusBarComponent } from './graph-genus-bar.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 describe('GraphGenusBarComponent', () => {
   let component: GraphGenusBarComponent;
@@ -8,7 +10,8 @@ describe('GraphGenusBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphGenusBarComponent ]
+      declarations: [ GraphGenusBarComponent ],
+      imports: [HttpClientModule, NgChartsModule]
     })
     .compileComponents();
 

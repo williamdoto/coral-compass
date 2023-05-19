@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GraphTemperatureComponent } from './graph-temperature.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 describe('GraphTemperatureComponent', () => {
   let component: GraphTemperatureComponent;
@@ -8,7 +10,8 @@ describe('GraphTemperatureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphTemperatureComponent ]
+      declarations: [ GraphTemperatureComponent ],
+      imports: [HttpClientModule, NgChartsModule]
     })
     .compileComponents();
 
