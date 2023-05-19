@@ -92,7 +92,7 @@ export class GraphTemperatureComponent {
           // Create the array of points in the format {x: unix timestamp in ms, y: temperature}
           data: dataset.temperatures.map(point => {
             return {
-              x: (point.x - 1970) * 365.25*24*3600*1000, // Convert years to unix time in ms.
+              x: this.yearToTimestamp(point.x), // Convert years to unix time in ms.
               y: point.y
             };
           }),
@@ -105,6 +105,15 @@ export class GraphTemperatureComponent {
       // Draw the changes on the screen.
       this.chart?.update();
     });
+  }
+
+  /**
+   * Converts a year to a unix timestamp in ms.
+   * @param year the year to convert
+   * @returns the timestamp of the start of the year in ms.
+   */
+  yearToTimestamp(year:number):number {
+      return (year - 1970) * 365.25*24*3600*1000;
   }
 
   /**

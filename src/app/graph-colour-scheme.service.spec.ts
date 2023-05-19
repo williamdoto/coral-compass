@@ -13,4 +13,8 @@ describe('GraphColourSchemeService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('is an array of colours', () => {
+    expect(service.colourScheme.length).toBeGreaterThan(0);
+  });
 });

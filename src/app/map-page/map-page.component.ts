@@ -186,14 +186,16 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * Extracts the text in the search box and filters by it.
+   * @param target the search box.
+   */
   searchByScientificName(target: EventTarget | null): void {
     if (target instanceof HTMLInputElement) {
       const query = target.value;
       this.updateMarkers(query);
     }
   }
-
-  
 
   updateMarkers(query: string): void {
     const formattedQuery = query.toLowerCase().trim();
