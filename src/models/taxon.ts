@@ -1,5 +1,11 @@
+/**
+ * Contains the mongoose model and useful data types for processing taxonomies.
+ */
 import mongoose from "mongoose";
 
+/**
+ * Mongoose model for taxonomy
+ */
 let taxonSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -54,11 +60,20 @@ let taxonSchema = new mongoose.Schema({
   },
 });
 
+/**
+ * A grouping consisting of a taxon (species, genus...) and the count of the
+ * number of occurrences.
+ */
 export type TaxonCount = {
   _id: string;
   count: number;
 };
 
+/**
+ * A count of the top fraction of a particular taxon. This also includes the
+ * count of the number of taxons that are not in the top fraction and the total
+ * sum of those counts.
+ */
 export type TaxonCountMany = {
   taxons: TaxonCount[];
   otherCount: number;
