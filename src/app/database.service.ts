@@ -1,3 +1,6 @@
+/**
+ * This file contains the functions used to make requests back to the server.
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { urls } from '../../server/urls';
